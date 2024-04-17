@@ -15,7 +15,8 @@ export const api_routes = {
     password: "/account/password",
   },
   users: "/users",
-  excel: {
-    failed: "/excel/failed",
+  criminals: "/criminals",
+  upload: {
+    failed_excel: "/upload/failed-excel",
   },
 } as const;

@@ -4,6 +4,7 @@ import {
   IconGauge,
   IconChevronRight,
   IconUserCircle,
+  IconUsersMinus,
 } from '@tabler/icons-react';
 import classes from './sidebar.module.css';
 import { FC, useState } from 'react';
@@ -18,6 +19,7 @@ interface SidebarProps {
 const mockdata = [
   { label: 'Dashboard', icon: IconGauge, link: page_routes.dashboard },
   { label: 'Users', icon: IconUserCircle, link: page_routes.users },
+  { label: 'Criminals', icon: IconUsersMinus, link: page_routes.criminals.list },
   // {
   //   label: 'Market news',
   //   icon: IconNotes,

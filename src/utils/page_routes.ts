@@ -13,4 +13,9 @@ export const page_routes = {
   account: {
     profile: "/profile",
   },
+  criminals: {
+    list: "/criminals",
+    detail: "/criminals/:criminalId",
+    view: (id: string | number) => `/criminals/${id}`,
+  },
 } as const;

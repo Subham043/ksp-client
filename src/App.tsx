@@ -8,6 +8,8 @@ import UserProvider from "./contexts/userProvider";
 import AxiosProvider from "./contexts/axiosProvider";
 import PageLoader from "./components/PageLoader";
 import PersistLayout from "./layouts/persist/persistLayout";
+import CriminalsPage from "./pages/criminals/list";
+import CriminalsDetailPage from "./pages/criminals/detail";
 const AuthLayout = lazy(()=>import("./layouts/auth"));
 const ProtectedLayout = lazy(()=>import("./layouts/protected/protectedLayout"));
 const GuestLayout = lazy(()=>import("./layouts/guest/guestLayout"));
@@ -35,6 +37,8 @@ function App() {
                     <Route element={<DashboardLayout />}>
                       <Route path={page_routes.dashboard} element={<DashboardPage />} />
                       <Route path={page_routes.users} element={<UsersPage />} />
+                      <Route path={page_routes.criminals.list} element={<CriminalsPage />} />
+                      <Route path={page_routes.criminals.detail} element={<CriminalsDetailPage />} />
                     </Route>
                   </Route>
 
