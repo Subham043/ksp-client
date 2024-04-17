@@ -1,0 +1,22 @@
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none !important;
+}
+a > *:hover {
+    text-decoration: none !important;
+}
+
+a.active, a.active:hover {
+  background-color: light-dark(var(--mantine-color-main-0), var(--mantine-color-main-7));
+  color: light-dark(var(--mantine-color-white), var(--mantine-color-white-0));
+}
+
+a.active .mantine-ThemeIcon-container svg {
+  color: light-dark(var(--mantine-color-main), var(--mantine-color-main-0));
+}
+
+a.active .mantine-ThemeIcon-container {
+  background-color: white;
+}
