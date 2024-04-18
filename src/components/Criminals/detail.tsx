@@ -1,11 +1,13 @@
 import { FC } from "react"
-import { Table, Group, Text, Box, Button, Paper, SimpleGrid } from '@mantine/core';
+import { Table, Group, Text, Box, Button, Paper, SimpleGrid, Image, Center } from '@mantine/core';
 import { useParams } from "react-router-dom";
 import { CriminalsDetailModalProps } from "../../pages/criminals/detail";
 import classes from '../../pages/criminals/detail/criminals.module.css'
 import { useCriminalQuery } from "../../hooks/data/criminals";
 import ErrorBoundary from "../Layout/ErrorBoundary";
 import dayjs from "dayjs";
+import { env } from "../../utils/env";
+import { api_routes } from "../../utils/api_routes";
 
 const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void}> = (props) => {
   const param = useParams<{criminalId: string}>();
@@ -47,7 +49,7 @@ const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void
                 </>}
             </Paper>
         </Box>
-        <SimpleGrid cols={{ base: 1, sm: 2 }}>
+        <SimpleGrid cols={{ base: 1, sm: 2 }} mb="sm">
             <Box pos="relative" className={classes.paper_background}>
                 <Paper shadow="sm" className={classes.paper_background}>
                     <div style={{textAlign: 'center'}}>
@@ -76,10 +78,6 @@ const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void
                                     <Table.Tr>
                                         <Table.Th>Permenant Address</Table.Th>
                                         <Table.Td>{data.permanent_address}</Table.Td>
-                                    </Table.Tr>
-                                    <Table.Tr>
-                                        <Table.Th>Present Address</Table.Th>
-                                        <Table.Td>{data.present_address}</Table.Td>
                                     </Table.Tr>
                                 </Table.Thead>
                             </Table>
@@ -113,16 +111,51 @@ const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void
                                         <Table.Td>{data.native_district}</Table.Td>
                                     </Table.Tr>
                                     <Table.Tr>
-                                        <Table.Th>Aadhar Photo</Table.Th>
-                                        <Table.Td>{data.aadhar_photo}</Table.Td>
-                                    </Table.Tr>
-                                    <Table.Tr>
-                                        <Table.Th>Photo</Table.Th>
-                                        <Table.Td>{data.photo}</Table.Td>
+                                        <Table.Th>Present Address</Table.Th>
+                                        <Table.Td>{data.present_address}</Table.Td>
                                     </Table.Tr>
                                 </Table.Thead>
                             </Table>
                         </Table.ScrollContainer>
+                    </>}
+                </Paper>
+            </Box>
+        </SimpleGrid>
+        <SimpleGrid cols={{ base: 1, sm: 2 }}>
+            <Box pos="relative" className={classes.paper_background}>
+                <Paper shadow="sm" className={classes.paper_background}>
+                    <div style={{textAlign: 'center'}}>
+                        <Text size="lg" fw={700} p="sm" bg="main" color="white">Personal Photo</Text>
+                    </div>
+                    {(data) && <>
+                        <Center>
+                        {data.photo ? 
+                            <Image
+                                radius="md"
+                                h={350}
+                                w={350}
+                                fit="contain"
+                                src={`${env.API_ENDPOINT}${api_routes.upload.images}/${data.photo}`}
+                            /> : null}
+                        </Center>
+                    </>}
+                </Paper>
+            </Box>
+            <Box pos="relative">
+                <Paper shadow="sm" className={classes.paper_background}>
+                    <div style={{textAlign: 'center'}}>
+                        <Text size="lg" fw={700} p="sm" bg="main" color="white">Aadhar Photo</Text>
+                    </div>
+                    {(data) && <>
+                        <Center py={10}>
+                            {data.aadhar_photo ? <Image
+                                radius="md"
+                                h={350}
+                                w={350}
+                                fit="contain"
+                                src={`${env.API_ENDPOINT}${api_routes.upload.images}/${data.aadhar_photo}`}
+                            /> : null}
+                        </Center>
                     </>}
                 </Paper>
             </Box>

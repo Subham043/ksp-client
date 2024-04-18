@@ -17,6 +17,7 @@ export const api_routes = {
   users: "/users",
   criminals: "/criminals",
   upload: {
+    images: "/upload/images",
     failed_excel: "/upload/failed-excel",
   },
 } as const;
