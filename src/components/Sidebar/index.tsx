@@ -10,6 +10,7 @@ import classes from './sidebar.module.css';
 import { FC, useState } from 'react';
 import { page_routes } from '../../utils/page_routes';
 import { NavLink } from 'react-router-dom';
+import logo from '../../assets/logo.png'
 
 interface SidebarProps {
   opened: boolean;
@@ -102,7 +103,7 @@ const Sidebar:FC<SidebarProps> = ({ opened, toggle }) => {
     <nav className={classes.navbar}>
       <div className={classes.header}>
         <Group className={classes.header_group}>
-          <img src="/logo.png" alt="" style={{ width: rem(100) }} />
+          <img src={logo} alt="" style={{ width: rem(100) }} />
           <Burger opened={opened} onClick={toggle} size="sm" className={classes.burger} />
         </Group>
       </div>

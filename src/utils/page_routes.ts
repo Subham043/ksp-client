@@ -3,6 +3,7 @@
  */
 
 export const page_routes = {
+  main: "/",
   dashboard: "/",
   users: "/users",
   auth: {

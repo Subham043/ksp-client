@@ -1,4 +1,4 @@
-import {BrowserRouter, Outlet, Route, Routes} from "react-router-dom";
+import {HashRouter, Outlet, Route, Routes} from "react-router-dom";
 import LoginPage from "./pages/auth/login"
 import { page_routes } from "./utils/page_routes"
 import { Suspense, lazy } from "react";
@@ -28,7 +28,7 @@ function App() {
   return (
     <>
       <UserProvider>
-        <BrowserRouter basename={page_routes.dashboard}>
+        <HashRouter basename={page_routes.dashboard}>
           <AxiosProvider>
             <QueryClientProvider client={queryClient}>
               <Routes>
@@ -59,7 +59,7 @@ function App() {
               </Routes>
             </QueryClientProvider>
           </AxiosProvider>
-        </BrowserRouter>
+        </HashRouter>
       </UserProvider>
     </>
   )

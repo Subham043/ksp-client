@@ -6,6 +6,7 @@ import {
 } from '@mantine/core';
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
+import logo from '../../assets/logo.png'
 
 const AuthLayout:FC = () => {
 
@@ -20,7 +21,7 @@ const AuthLayout:FC = () => {
                     >
                         <Grid.Col span={{ base: 12, sm: 7, md: 5, lg: 5 }}>
                             <Center>
-                                <img src="/logo.png" alt="" style={{ width: rem(150) }} />
+                                <img src={logo} alt="" style={{ width: rem(150) }} />
                             </Center>
                             <Outlet /> 
                         </Grid.Col>
