@@ -11,7 +11,7 @@ import { useAxios } from "../../hooks/useAxios";
 */
 const PersistLayout:FC = () => {
     const [loading, setLoading] = useState<boolean>(true)
-    const { setUser, removeUser } = useUser();
+    const { setUser, removeUser, userCookieData } = useUser();
     const { axios } = useAxios();
 
     
@@ -19,13 +19,22 @@ const PersistLayout:FC = () => {
         
         let isMounted = true;
         const checkUserAuthenticated = async () => {
-            try {
-                const response = await axios.get<{data:UserType}>(api_routes.account.profile);
-                setUser(response.data.data);
-            } catch (error) {
+            if(userCookieData){
+                try {
+                    const response = await axios.get<{data:UserType}>(api_routes.account.profile, {
+                        headers: {
+                            Authorization: `Bearer ${userCookieData.access_token}`
+                        }
+                    });
+                    setUser(response.data.data);
+                } catch (error) {
+                    removeUser();
+                } finally {
+                    isMounted && setLoading(false)
+                }
+            }else{
                 removeUser();
-            } finally {
-                isMounted && setLoading(false)
+                isMounted && setLoading(false);
             }
         }
         
@@ -33,7 +42,7 @@ const PersistLayout:FC = () => {
 
         return () => {isMounted = false; checkUserAuthenticated()};
 
-    }, [setUser, removeUser, axios])
+    }, [setUser, removeUser, axios, userCookieData])
     
     return (
         <>

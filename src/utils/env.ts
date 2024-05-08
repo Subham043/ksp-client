@@ -6,5 +6,5 @@ export const env = {
   MAIN_URL:
     import.meta.env.VITE_USER_NODE_ENV === "development"
       ? "http://localhost:5173"
-      : "https://trading-client.digisole.in",
+      : "https://ksp-client.digisole.in",
 } as const;

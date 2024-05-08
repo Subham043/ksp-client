@@ -7,9 +7,11 @@ import ErrorBoundary from "../Layout/ErrorBoundary";
 import dayjs from "dayjs";
 import { env } from "../../utils/env";
 import { api_routes } from "../../utils/api_routes";
+import { useUser } from "../../hooks/useUser";
 
 const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void}> = (props) => {
   const param = useParams<{criminalId: string}>();
+  const { user } = useUser();
   const {data, isFetching, isLoading, status, error, refetch} = useCriminalQuery(Number(param.criminalId), true);
   return (
     <ErrorBoundary hasData={data ? true : false} isLoading={isLoading || isFetching} status={status} error={error} hasPagination={false} refetch={refetch}>
@@ -127,7 +129,7 @@ const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void
                             h={350}
                             w={350}
                             fit="contain"
-                            src={`${env.API_ENDPOINT}${api_routes.upload.images}/${data.photo}`}
+                            src={`${env.API_ENDPOINT}${api_routes.upload.images}/${data.photo}?token=${user?.access_token}`}
                         /> : null}
                     </Center>
                 </>}
@@ -143,7 +145,7 @@ const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void
                             h={350}
                             w={350}
                             fit="contain"
-                            src={`${env.API_ENDPOINT}${api_routes.upload.images}/${data.aadhar_photo}`}
+                            src={`${env.API_ENDPOINT}${api_routes.upload.images}/${data.aadhar_photo}?token=${user?.access_token}`}
                         /> : null}
                     </Center>
                 </>}

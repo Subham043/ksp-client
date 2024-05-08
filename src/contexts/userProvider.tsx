@@ -1,5 +1,8 @@
-import React, { createContext, useCallback, useState } from "react";
+import React, { createContext, useCallback, useMemo, useState } from "react";
 import { ChildrenType, UserType } from "../utils/types";
+import { getCookie, setCookie } from "react-use-cookie";
+
+export const UserCookieName = 'KSP_SESSION';
 
 /*
   * User Context Type
@@ -7,6 +10,7 @@ import { ChildrenType, UserType } from "../utils/types";
 type UserContextType = {
     isAuthenticated: boolean;
     user: UserType | null;
+    userCookieData: UserType | undefined;
     setUser: (data:UserType) => void;
     removeUser: () => void
 }
@@ -17,6 +21,7 @@ type UserContextType = {
 const userDefaultValues: UserContextType = {
     isAuthenticated: false,
     user: null,
+    userCookieData: undefined,
     setUser: () => {},
     removeUser: () => {}
 };
@@ -32,13 +37,15 @@ export const UserContext = createContext<UserContextType>(userDefaultValues);
 const UserProvider: React.FC<ChildrenType> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<UserType | null>(null);
+  const fetchCookie = useCallback((value:string)=>getCookie(value),[])
 
   /*
    * Function for setting user state
    */
-  const userHandler = useCallback((data: UserType) => {
+  const userHandler = useCallback(async (data: UserType) => {
     setUser(data);
     setIsAuthenticated(true);
+    setCookie(UserCookieName, btoa(JSON.stringify(data)));
   }, []);
 
   const removeUser = useCallback(() => {
@@ -46,10 +53,29 @@ const UserProvider: React.FC<ChildrenType> = ({ children }) => {
     setIsAuthenticated(false);
   }, []);
 
+  const userCookieData = useMemo(()=>{
+    const cookie = fetchCookie(UserCookieName);
+    if(cookie.length>0) {
+      try {
+        const encryptedString = atob(cookie);
+        const decryptedData = JSON.parse(encryptedString) as UserType|null;
+        if(decryptedData){
+          return decryptedData as UserType;
+        }else{
+            return undefined;
+        }
+      } catch (error) {
+          return undefined;
+      }
+    }
+    return undefined;
+  }, [fetchCookie]);
+
   return (
     <UserContext.Provider
       value={{ 
         user, 
+        userCookieData,
         setUser:userHandler,
         isAuthenticated, 
         removeUser
