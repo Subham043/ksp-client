@@ -9,6 +9,8 @@ enum Sex {
 enum RelationType {
   Father = "Father",
   Husband = "Husband",
+  Mother = "Mother",
+  Wife = "Wife",
 }
 
 export type SchemaType = {
@@ -21,7 +23,7 @@ export type SchemaType = {
   aadhar_photo?: File | undefined;
   photo?: File | undefined;
   relation_name?: string | undefined;
-  relation_type?: "Father" | "Husband" | undefined;
+  relation_type?: "Father" | "Husband" | "Mother" | "Wife" | undefined;
   caste?: string | undefined;
   fpb_sl_no?: string | undefined;
   fpb_classn_no?: string | undefined;

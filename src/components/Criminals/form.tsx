@@ -106,7 +106,7 @@ const CriminalForm:FC<CriminalFormProps & {toggleModal: (value: CriminalsModalPr
                     <TextInput label="Relation Name" {...form.getInputProps('relation_name')} />
                     <Select
                         label="Relation Type"
-                        data={['Husband', 'Father']}
+                        data={['Husband', 'Father', 'Wife', 'Mother']}
                         value={form.values.relation_type ? form.values.relation_type : null}
                         onChange={(value) => form.setFieldValue("relation_type", value ? value as "Husband" | "Father" : undefined)}
                     />
