@@ -5,6 +5,7 @@ import {
   IconChevronRight,
   IconUserCircle,
   IconUsersMinus,
+  IconFilePercent,
 } from '@tabler/icons-react';
 import classes from './sidebar.module.css';
 import { FC, useState } from 'react';
@@ -21,6 +22,7 @@ const mockdata = [
   { label: 'Dashboard', icon: IconGauge, link: page_routes.dashboard },
   { label: 'Users', icon: IconUserCircle, link: page_routes.users },
   { label: 'Criminals', icon: IconUsersMinus, link: page_routes.criminals.list },
+  { label: 'Crimes', icon: IconFilePercent, link: page_routes.crimes.list },
   // {
   //   label: 'Market news',
   //   icon: IconNotes,

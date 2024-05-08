@@ -8,8 +8,6 @@ import UserProvider from "./contexts/userProvider";
 import AxiosProvider from "./contexts/axiosProvider";
 import PageLoader from "./components/PageLoader";
 import PersistLayout from "./layouts/persist/persistLayout";
-import CriminalsPage from "./pages/criminals/list";
-import CriminalsDetailPage from "./pages/criminals/detail";
 const AuthLayout = lazy(()=>import("./layouts/auth"));
 const ProtectedLayout = lazy(()=>import("./layouts/protected/protectedLayout"));
 const GuestLayout = lazy(()=>import("./layouts/guest/guestLayout"));
@@ -19,6 +17,10 @@ const ResetPasswordPage = lazy(()=>import("./pages/auth/reset_password"));
 const DashboardPage = lazy(()=>import("./pages/dashboard"));
 const PageNotFound = lazy(()=>import("./pages/pageNotFound"));
 const UsersPage = lazy(()=>import("./pages/users"));
+const CriminalsPage = lazy(()=>import("./pages/criminals/list"));
+const CriminalsDetailPage = lazy(()=>import("./pages/criminals/detail"));
+const CrimesPage = lazy(()=>import("./pages/crimes/list"));
+const CrimesDetailPage = lazy(()=>import("./pages/crimes/detail"));
 
 // Create a client
 const queryClient = new QueryClient(QueryClientOptions);
@@ -39,6 +41,8 @@ function App() {
                       <Route path={page_routes.users} element={<UsersPage />} />
                       <Route path={page_routes.criminals.list} element={<CriminalsPage />} />
                       <Route path={page_routes.criminals.detail} element={<CriminalsDetailPage />} />
+                      <Route path={page_routes.crimes.list} element={<CrimesPage />} />
+                      <Route path={page_routes.crimes.detail} element={<CrimesDetailPage />} />
                     </Route>
                   </Route>
 

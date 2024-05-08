@@ -20,6 +20,7 @@
     "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
   },
   "win": {
+    "icon": "dist/logo.ico",
     "target": [
       {
         "target": "nsis",
