@@ -24,7 +24,7 @@ const CrimesPage:FC = () => {
 
     return (
         <div>
-            <SearchButtonHeader hasButton={true} buttonText="Create" buttonClickHandler={() => toggleModal({status: true, type: 'Create'})} hasExport={true} excelLoading={excelLoading} exportClickHandler={exportExcelHandler} hasImport={false} />
+            <SearchButtonHeader hasButton={true} buttonText="Create" searchText="Search by Type_of_Crime/Section_of_law/MOB_file.no/HS.NO." buttonClickHandler={() => toggleModal({status: true, type: 'Create'})} hasExport={true} excelLoading={excelLoading} exportClickHandler={exportExcelHandler} hasImport={false} />
             <Paper shadow="sm" className={classes.paper_background}>
                 <CrimesTable toggleModal={toggleModal} />
             </Paper>

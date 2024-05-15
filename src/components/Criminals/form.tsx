@@ -2,13 +2,14 @@ import { FC, useEffect } from "react";
 import { useToast } from "../../hooks/useToast";
 import { useForm } from "@mantine/form";
 import { yupResolver } from "mantine-form-yup-resolver";
-import { Button, FileInput, Select, SimpleGrid, TextInput, Textarea } from "@mantine/core";
+import { DateInput } from '@mantine/dates';
+import { Button, FileInput, Select, SimpleGrid, TextInput, Textarea, MultiSelect } from "@mantine/core";
 import { isAxiosError } from "axios";
 import { useAddCriminalMutation, useUpdateCriminalMutation, useCriminalQuery } from "../../hooks/data/criminals";
 import { MutateOptions } from "@tanstack/react-query";
 import { AxiosErrorResponseType, CriminalFormType, CriminalType } from "../../utils/types";
 import { CriminalsModalProps } from "../../pages/criminals/list";
-import { SchemaType, initialValues, schema } from "./schema";
+import { Beard, Build, BurnMarks, Complexion, DressUsed, Eyes, Face, FaceHead, Habbits, Hair, Leucoderma, Mole, Moustaches, Nose, OtherParts, Scar, SchemaType, Tattoo, Teeth, Voice, initialValues, schema } from "./schema";
 import ErrorBoundary from "../Layout/ErrorBoundary";
 import { IconFileInfo, IconPhotoScan } from "@tabler/icons-react";
 
@@ -31,6 +32,7 @@ const CriminalForm:FC<CriminalFormProps & {toggleModal: (value: CriminalsModalPr
             form.setValues({
                 name: data.name,
                 sex: data.sex,
+                dob: data.dob ? data.dob : undefined,
                 permanent_address: data.permanent_address ? data.permanent_address : undefined,
                 present_address: data.present_address ? data.present_address : undefined,
                 phone: data.phone ? data.phone : undefined,
@@ -46,6 +48,25 @@ const CriminalForm:FC<CriminalFormProps & {toggleModal: (value: CriminalsModalPr
                 educational_qualification: data.educational_qualification ? data.educational_qualification : undefined,
                 native_ps: data.native_ps ? data.native_ps : undefined,
                 native_district: data.native_district ? data.native_district : undefined,
+                voice: data.voice ? data.voice : undefined,
+                build: data.build ? data.build : undefined,
+                complexion: data.complexion ? data.complexion : undefined,
+                teeth: data.teeth ? data.teeth : undefined,
+                hair: data.hair ? data.hair : undefined,
+                eyes: data.eyes ? data.eyes : undefined,
+                habbits: data.habbits ? data.habbits : undefined,
+                burnMarks: data.burnMarks ? data.burnMarks : undefined,
+                tattoo: data.tattoo ? data.tattoo : undefined,
+                mole: data.mole ? data.mole : undefined,
+                scar: data.scar ? data.scar : undefined,
+                leucoderma: data.leucoderma ? data.leucoderma : undefined,
+                faceHead: data.faceHead ? data.faceHead : undefined,
+                otherPartsBody: data.otherPartsBody ? data.otherPartsBody : undefined,
+                dressUsed: data.dressUsed ? data.dressUsed : undefined,
+                beard: data.beard ? data.beard : undefined,
+                face: data.face ? data.face : undefined,
+                moustache: data.moustache ? data.moustache : undefined,
+                nose: data.nose ? data.nose : undefined,
             });
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,7 +101,7 @@ const CriminalForm:FC<CriminalFormProps & {toggleModal: (value: CriminalsModalPr
     return (
         <ErrorBoundary hasData={props.status && props.type==="Edit" ? (data ? true : false): true} isLoading={isLoading || isFetching} status={props.status && props.type==="Edit" ? status : "success"} error={error} hasPagination={false} refetch={refetch}>
             <form onSubmit={form.onSubmit(onSubmit)}>
-                <SimpleGrid cols={{ base: 1, sm: 3 }}>
+                <SimpleGrid cols={{ base: 1, sm: 4 }}>
                     <TextInput withAsterisk label="Name" {...form.getInputProps('name')} />
                     <Select
                         label="Sex"
@@ -89,6 +110,12 @@ const CriminalForm:FC<CriminalFormProps & {toggleModal: (value: CriminalsModalPr
                         onChange={(value) => form.setFieldValue("sex", value ? value as 'Male' | 'Female' | 'Others' : "Male")}
                     />
                     <TextInput label="Phone" {...form.getInputProps('phone')} />
+                    <DateInput
+                        value={form.values.dob ? new Date(form.values.dob) : undefined}
+                        onChange={(value) => form.setFieldValue('dob', value?.toISOString())}
+                        label="Date of Birth"
+                        placeholder="Date of Birth"
+                    />
                 </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 3}} mt="md">
                     <TextInput label="Aadhar No" {...form.getInputProps('aadhar_no')} />
@@ -129,10 +156,231 @@ const CriminalForm:FC<CriminalFormProps & {toggleModal: (value: CriminalsModalPr
                         {...form.getInputProps('photo')}
                     />
                 </SimpleGrid>
-                <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
+                <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
+                    <MultiSelect
+                        label="Voice/Speech"
+                        placeholder="Type to search for Voice/Speech"
+                        maxDropdownHeight={200}
+                        data={Voice}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.voice}
+                        value={form.values.voice ? form.values.voice.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('voice', value ? value.join(",") : undefined)}
+                    />
+                    <MultiSelect
+                        label="Build"
+                        placeholder="Type to search for Build"
+                        maxDropdownHeight={200}
+                        data={Build}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.build}
+                        value={form.values.build ? form.values.build.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('build', value ? value.join(",") : undefined)}
+                    />
+                    <MultiSelect
+                        label="Complexion"
+                        placeholder="Type to search for Complexion"
+                        maxDropdownHeight={200}
+                        data={Complexion}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.complexion}
+                        value={form.values.complexion ? form.values.complexion.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('complexion', value ? value.join(",") : undefined)}
+                    />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
+                    <MultiSelect
+                        label="Teeth"
+                        placeholder="Type to search for Teeth"
+                        maxDropdownHeight={200}
+                        data={Teeth}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.teeth}
+                        value={form.values.teeth ? form.values.teeth.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('teeth', value ? value.join(",") : undefined)}
+                    />
+                    <MultiSelect
+                        label="Hair"
+                        placeholder="Type to search for Hair"
+                        maxDropdownHeight={200}
+                        data={Hair}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.hair}
+                        value={form.values.hair ? form.values.hair.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('hair', value ? value.join(",") : undefined)}
+                    />
+                    <MultiSelect
+                        label="Eyes"
+                        placeholder="Type to search for Eyes"
+                        maxDropdownHeight={200}
+                        data={Eyes}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.eyes}
+                        value={form.values.eyes ? form.values.eyes.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('eyes', value ? value.join(",") : undefined)}
+                    />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
+                    <MultiSelect
+                        label="Habits And Vices"
+                        placeholder="Type to search for Habits And Vices"
+                        maxDropdownHeight={200}
+                        data={Habbits}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.habbits}
+                        value={form.values.habbits ? form.values.habbits.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('habbits', value ? value.join(",") : undefined)}
+                    />
+                    <MultiSelect
+                        label="Burn Marks"
+                        placeholder="Type to search for Burn Marks"
+                        maxDropdownHeight={200}
+                        data={BurnMarks}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.burnMarks}
+                        value={form.values.burnMarks ? form.values.burnMarks.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('burnMarks', value ? value.join(",") : undefined)}
+                    />
+                    <MultiSelect
+                        label="Tattoo"
+                        placeholder="Type to search for Tattoo"
+                        maxDropdownHeight={200}
+                        data={Tattoo}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.tattoo}
+                        value={form.values.tattoo ? form.values.tattoo.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('tattoo', value ? value.join(",") : undefined)}
+                    />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
+                    <MultiSelect
+                        label="Mole"
+                        placeholder="Type to search for Mole"
+                        maxDropdownHeight={200}
+                        data={Mole}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.mole}
+                        value={form.values.mole ? form.values.mole.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('mole', value ? value.join(",") : undefined)}
+                    />
+                    <MultiSelect
+                        label="Scar"
+                        placeholder="Type to search for Scar"
+                        maxDropdownHeight={200}
+                        data={Scar}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.scar}
+                        value={form.values.scar ? form.values.scar.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('scar', value ? value.join(",") : undefined)}
+                    />
+                    <MultiSelect
+                        label="Leucoderma"
+                        placeholder="Type to search for Leucoderma"
+                        maxDropdownHeight={200}
+                        data={Leucoderma}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.leucoderma}
+                        value={form.values.leucoderma ? form.values.leucoderma.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('leucoderma', value ? value.join(",") : undefined)}
+                    />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
+                    <MultiSelect
+                        label="Face/Head"
+                        placeholder="Type to search for Face/Head"
+                        maxDropdownHeight={200}
+                        data={FaceHead}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.faceHead}
+                        value={form.values.faceHead ? form.values.faceHead.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('faceHead', value ? value.join(",") : undefined)}
+                    />
+                    <MultiSelect
+                        label="Other Parts of Body"
+                        placeholder="Type to search for Other Parts of Body"
+                        maxDropdownHeight={200}
+                        data={OtherParts}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.otherPartsBody}
+                        value={form.values.otherPartsBody ? form.values.otherPartsBody.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('otherPartsBody', value ? value.join(",") : undefined)}
+                    />
+                    <MultiSelect
+                        label="Dress Used"
+                        placeholder="Type to search for Dress Used"
+                        maxDropdownHeight={200}
+                        data={DressUsed}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.dressUsed}
+                        value={form.values.dressUsed ? form.values.dressUsed.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('dressUsed', value ? value.join(",") : undefined)}
+                    />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
+                    <MultiSelect
+                        label="Beard"
+                        placeholder="Type to search for Beard"
+                        maxDropdownHeight={200}
+                        data={Beard}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.beard}
+                        value={form.values.beard ? form.values.beard.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('beard', value ? value.join(",") : undefined)}
+                    />
+                    <MultiSelect
+                        label="Face"
+                        placeholder="Type to search for Face"
+                        maxDropdownHeight={200}
+                        data={Face}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.face}
+                        value={form.values.face ? form.values.face.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('face', value ? value.join(",") : undefined)}
+                    />
+                    <MultiSelect
+                        label="Moustache"
+                        placeholder="Type to search for Moustache"
+                        maxDropdownHeight={200}
+                        data={Moustaches}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.moustache}
+                        value={form.values.moustache ? form.values.moustache.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('moustache', value ? value.join(",") : undefined)}
+                    />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
+                    <MultiSelect
+                        label="Nose"
+                        placeholder="Type to search for Nose"
+                        maxDropdownHeight={200}
+                        data={Nose}
+                        searchable
+                        nothingFoundMessage="Nothing found..."
+                        error={form.errors.nose}
+                        value={form.values.nose ? form.values.nose.split(",") : undefined}
+                        onChange={(value)=>form.setFieldValue('nose', value ? value.join(",") : undefined)}
+                    />
                     <Textarea
                         label="Permenant Address"
-                         {...form.getInputProps('permenant_address')}
+                         {...form.getInputProps('permanent_address')}
                     />
                     <Textarea
                         label="Present Address"

@@ -1,17 +1,23 @@
 import { FC } from "react"
 import { Table, Group, Text, Button, SimpleGrid } from '@mantine/core';
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { CrimesDetailModalProps } from "../../pages/crimes/detail";
 import { useCrimeQuery } from "../../hooks/data/crimes";
 import ErrorBoundary from "../Layout/ErrorBoundary";
 import dayjs from "dayjs";
+import { page_routes } from "../../utils/page_routes";
 
 const CrimeDetail:FC<{toggleModal: (value: CrimesDetailModalProps) => void}> = (props) => {
   const param = useParams<{crimeId: string}>();
   const {data, isFetching, isLoading, status, error, refetch} = useCrimeQuery(Number(param.crimeId), true);
   return (
     <ErrorBoundary hasData={data ? true : false} isLoading={isLoading || isFetching} status={status} error={error} hasPagination={false} refetch={refetch}>
-        <Group justify="flex-end" mb="lg" align="center">
+        <Group justify="space-between" mb="lg" align="center">
+            <Link to={`${page_routes.crimes.list}`}>
+                <Button type='button' variant="filled" color='dark'>
+                    Back
+                </Button>
+            </Link>
             <Button type='submit' variant="filled" color='main' onClick={() => props.toggleModal({status: true, type: 'Edit', id: Number(param.crimeId)})}>
                 Edit
             </Button>
@@ -54,12 +60,16 @@ const CrimeDetail:FC<{toggleModal: (value: CrimesDetailModalProps) => void}> = (
                         <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
                             <Table.Thead>
                                 <Table.Tr>
-                                    <Table.Th>Clues left at or Near the Scene of Occurrence</Table.Th>
-                                    <Table.Td>{data.cluesLeft}</Table.Td>
+                                    <Table.Th>HS. Opening Date</Table.Th>
+                                    <Table.Td>{data.hsOpeningDate && dayjs(data.hsOpeningDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Table.Td>
                                 </Table.Tr>
                                 <Table.Tr>
-                                    <Table.Th>Dress Used</Table.Th>
-                                    <Table.Td>{data.dressUsed}</Table.Td>
+                                    <Table.Th>HS. Closing Date</Table.Th>
+                                    <Table.Td>{data.hsClosingDate && dayjs(data.hsClosingDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Clues left at or Near the Scene of Occurrence</Table.Th>
+                                    <Table.Td>{data.cluesLeft}</Table.Td>
                                 </Table.Tr>
                                 <Table.Tr>
                                     <Table.Th>Languages Known</Table.Th>
@@ -85,6 +95,19 @@ const CrimeDetail:FC<{toggleModal: (value: CrimesDetailModalProps) => void}> = (
                                     <Table.Th>Properties Attacked/stolen</Table.Th>
                                     <Table.Td>{data.propertiesAttacked}</Table.Td>
                                 </Table.Tr>
+                            </Table.Thead>
+                        </Table>
+                    </Table.ScrollContainer>
+                </>}
+            </div>
+            <div>
+                <div style={{textAlign: 'center'}}>
+                        <Text size="lg" fw={700} p="sm" bg="main" color="white">Physical Peculiarities</Text>
+                    </div>
+                {(data) && <>
+                    <Table.ScrollContainer minWidth={'100%'}>
+                        <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
+                            <Table.Thead>
                                 <Table.Tr>
                                     <Table.Th>Style Assumed</Table.Th>
                                     <Table.Td>{data.styleAssumed}</Table.Td>
@@ -106,10 +129,6 @@ const CrimeDetail:FC<{toggleModal: (value: CrimesDetailModalProps) => void}> = (
                                     <Table.Td>{data.transportUsedBefore}</Table.Td>
                                 </Table.Tr>
                                 <Table.Tr>
-                                    <Table.Th>Voice / Speech</Table.Th>
-                                    <Table.Td>{data.voice}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
                                     <Table.Th>Gang</Table.Th>
                                     <Table.Td>{data.gang}</Table.Td>
                                 </Table.Tr>
@@ -120,87 +139,6 @@ const CrimeDetail:FC<{toggleModal: (value: CrimesDetailModalProps) => void}> = (
                                 <Table.Tr>
                                     <Table.Th>Brief Fact</Table.Th>
                                     <Table.Td>{data.briefFact}</Table.Td>
-                                </Table.Tr>
-                            </Table.Thead>
-                        </Table>
-                    </Table.ScrollContainer>
-                </>}
-            </div>
-            <div>
-                <div style={{textAlign: 'center'}}>
-                        <Text size="lg" fw={700} p="sm" bg="main" color="white">Physical Peculiarities</Text>
-                    </div>
-                {(data) && <>
-                    <Table.ScrollContainer minWidth={'100%'}>
-                        <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
-                            <Table.Thead>
-                                <Table.Tr>
-                                    <Table.Th>Build</Table.Th>
-                                    <Table.Td>{data.build}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Complexion</Table.Th>
-                                    <Table.Td>{data.complexion}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Teeth</Table.Th>
-                                    <Table.Td>{data.teeth}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Hair</Table.Th>
-                                    <Table.Td>{data.hair}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Eyes</Table.Th>
-                                    <Table.Td>{data.eyes}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Habits And Vices</Table.Th>
-                                    <Table.Td>{data.habbits}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Burn Marks</Table.Th>
-                                    <Table.Td>{data.burnMarks}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Tattoo</Table.Th>
-                                    <Table.Td>{data.tattoo}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Mole</Table.Th>
-                                    <Table.Td>{data.mole}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Scar</Table.Th>
-                                    <Table.Td>{data.scar}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Leucoderma</Table.Th>
-                                    <Table.Td>{data.leucoderma}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Face/Head</Table.Th>
-                                    <Table.Td>{data.faceHead}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Other parts of body</Table.Th>
-                                    <Table.Td>{data.otherPartsBody}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Beard</Table.Th>
-                                    <Table.Td>{data.beard}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Face</Table.Th>
-                                    <Table.Td>{data.face}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Moustaches</Table.Th>
-                                    <Table.Td>{data.moustache}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Nose</Table.Th>
-                                    <Table.Td>{data.nose}</Table.Td>
                                 </Table.Tr>
                             </Table.Thead>
                         </Table>

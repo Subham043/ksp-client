@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import { useToast } from "../../hooks/useToast";
 import { useForm } from "@mantine/form";
 import { yupResolver } from "mantine-form-yup-resolver";
-import { Button, PasswordInput, TextInput } from "@mantine/core";
+import { Button, PasswordInput, Select, TextInput } from "@mantine/core";
 import { isAxiosError } from "axios";
 import { useAddUserMutation, useUpdateUserMutation, useUserQuery } from "../../hooks/data/users";
 import { UserDrawerProps } from "../../pages/users";
@@ -29,6 +29,11 @@ const UserForm:FC<UserFormProps & {toggleDrawer: (value: UserDrawerProps) => voi
             form.setValues({
                 email: data.email,
                 name: data.name,
+                role: data.role,
+            });
+        }else{
+            form.setValues({
+                role: "user",
             });
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,6 +69,13 @@ const UserForm:FC<UserFormProps & {toggleDrawer: (value: UserDrawerProps) => voi
             <form onSubmit={form.onSubmit(onSubmit)}>
                 <TextInput withAsterisk data-autofocus label="Name" placeholder="mantine dev" {...form.getInputProps('name')} />
                 <TextInput withAsterisk label="Email" placeholder="you@mantine.dev" {...form.getInputProps('email')} mt="md" />
+                <Select
+                    label="Sex"
+                    mt="md"
+                    data={['user', 'admin']}
+                    value={form.values.role ? form.values.role : "user"}
+                    onChange={(value) => form.setFieldValue("role", value ? value as 'user' | 'admin' : "user")}
+                />
                 {
                     props.type === "Create" && <>
                         <PasswordInput label="Password" placeholder="Password" withAsterisk mt="md" {...form.getInputProps('password')} />

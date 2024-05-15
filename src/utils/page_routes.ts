@@ -24,4 +24,14 @@ export const page_routes = {
     detail: "/crimes/:crimeId",
     view: (id: string | number) => `/crimes/${id}`,
   },
+  punishment: {
+    list: "/punishment",
+    detail: "/punishment/:punishmentId",
+    view: (id: string | number) => `/punishment/${id}`,
+  },
+  court_details: {
+    list: "/court-details",
+    detail: "/court-details/:courtDetailId",
+    view: (id: string | number) => `/court-details/${id}`,
+  },
 } as const;

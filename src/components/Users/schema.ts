@@ -1,8 +1,14 @@
 import * as yup from "yup";
 
+enum Role {
+  User = "user",
+  Admin = "admin",
+}
+
 type UpdateSchema = {
   email: string;
   name: string;
+  role: "user" | "admin";
 };
 type CreateSchema = UpdateSchema & {
   password: string;
@@ -13,6 +19,10 @@ export type SchemaType = CreateSchema;
 export const updateSchema: yup.ObjectSchema<UpdateSchema> = yup.object().shape({
   email: yup.string().required("Email is required").email("Invalid email"),
   name: yup.string().required("Name is required"),
+  role: yup
+    .mixed<Role>()
+    .oneOf(Object.values(Role), "Invalid sex")
+    .required("Role is required"),
 });
 
 export const createSchema: yup.ObjectSchema<SchemaType> = updateSchema.shape({

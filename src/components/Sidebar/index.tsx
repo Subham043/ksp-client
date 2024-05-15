@@ -6,12 +6,15 @@ import {
   IconUserCircle,
   IconUsersMinus,
   IconFilePercent,
+  IconBuildingBank,
+  IconPrison,
 } from '@tabler/icons-react';
 import classes from './sidebar.module.css';
 import { FC, useState } from 'react';
 import { page_routes } from '../../utils/page_routes';
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/logo.png'
+import { useUser } from '../../hooks/useUser';
 
 interface SidebarProps {
   opened: boolean;
@@ -19,10 +22,12 @@ interface SidebarProps {
 }
 
 const mockdata = [
-  { label: 'Dashboard', icon: IconGauge, link: page_routes.dashboard },
-  { label: 'Users', icon: IconUserCircle, link: page_routes.users },
-  { label: 'Criminals', icon: IconUsersMinus, link: page_routes.criminals.list },
-  { label: 'Crimes', icon: IconFilePercent, link: page_routes.crimes.list },
+  { label: 'Dashboard', icon: IconGauge, link: page_routes.dashboard, role: ["user", "admin"] },
+  { label: 'Users', icon: IconUserCircle, link: page_routes.users, role: ["admin"] },
+  { label: 'Criminals', icon: IconUsersMinus, link: page_routes.criminals.list, role: ["user", "admin"] },
+  { label: 'Crimes', icon: IconFilePercent, link: page_routes.crimes.list, role: ["user", "admin"] },
+  { label: 'Court Details', icon: IconBuildingBank, link: page_routes.court_details.list, role: ["user", "admin"] },
+  { label: 'Jail / Punishment Details', icon: IconPrison, link: page_routes.punishment.list, role: ["user", "admin"] },
   // {
   //   label: 'Market news',
   //   icon: IconNotes,
@@ -99,7 +104,8 @@ function LinksGroup({ icon: Icon, label, initiallyOpened, links, link }: LinksGr
 }
 
 const Sidebar:FC<SidebarProps> = ({ opened, toggle }) => {
-  const links = mockdata.map((item) => <LinksGroup {...item} key={item.label} />);
+  const  {user} = useUser();
+  const links = mockdata.filter((item) => item.role.includes(user!.role)).map((item) => <LinksGroup {...item} key={item.label} />);
 
   return (
     <nav className={classes.navbar}>

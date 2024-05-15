@@ -21,11 +21,13 @@ type ImportButtonType = {
 type SearchButtonHeaderProps = ({
     hasButton: false;
     hasSearch?: boolean;
+    searchText?: string;
 } | {
     hasButton: true;
     hasSearch?: boolean;
     buttonClickHandler: () => void;
     buttonText: string;
+    searchText?: string;
 }) & ExportButtonType & ImportButtonType
 
 const SearchButtonHeader:FC<SearchButtonHeaderProps> = ({hasSearch=true, ...props}) => {
@@ -48,8 +50,9 @@ const SearchButtonHeader:FC<SearchButtonHeaderProps> = ({hasSearch=true, ...prop
             {hasSearch && <TextInput
                 rightSectionPointerEvents="none"
                 rightSection={icon}
-                placeholder="Search"
+                placeholder={props.searchText ? props.searchText : "Search"}
                 onChange={(event) => searchHandler(event.target.value)}
+                w={'25%'}
             />}
         </Group>
     )

@@ -220,6 +220,66 @@ const criminalFormData: (data: CriminalFormType) => FormData = (data) => {
   if (data.native_district) {
     formData.append("native_district", data.native_district);
   }
+  if (data.voice) {
+    formData.append("voice", data.voice);
+  }
+  if (data.build) {
+    formData.append("build", data.build);
+  }
+  if (data.complexion) {
+    formData.append("complexion", data.complexion);
+  }
+  if (data.teeth) {
+    formData.append("teeth", data.teeth);
+  }
+  if (data.hair) {
+    formData.append("hair", data.hair);
+  }
+  if (data.eyes) {
+    formData.append("eyes", data.eyes);
+  }
+  if (data.habbits) {
+    formData.append("habbits", data.habbits);
+  }
+  if (data.burnMarks) {
+    formData.append("burnMarks", data.burnMarks);
+  }
+  if (data.tattoo) {
+    formData.append("tattoo", data.tattoo);
+  }
+  if (data.mole) {
+    formData.append("mole", data.mole);
+  }
+  if (data.scar) {
+    formData.append("scar", data.scar);
+  }
+  if (data.leucoderma) {
+    formData.append("leucoderma", data.leucoderma);
+  }
+  if (data.faceHead) {
+    formData.append("faceHead", data.faceHead);
+  }
+  if (data.otherPartsBody) {
+    formData.append("otherPartsBody", data.otherPartsBody);
+  }
+  if (data.dressUsed) {
+    formData.append("dressUsed", data.dressUsed);
+  }
+  if (data.beard) {
+    formData.append("beard", data.beard);
+  }
+  if (data.face) {
+    formData.append("face", data.face);
+  }
+  if (data.moustache) {
+    formData.append("moustache", data.moustache);
+  }
+  if (data.nose) {
+    formData.append("nose", data.nose);
+  }
+  if (data.dob) {
+    formData.append("dob", data.dob);
+  }
   if (data.aadhar_photo) {
     formData.append("aadhar_photo", data.aadhar_photo);
   }

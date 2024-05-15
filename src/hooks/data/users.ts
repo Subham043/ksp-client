@@ -145,6 +145,7 @@ export const useUpdateUserMutation = (id: number) => {
     mutationFn: async (updateUserVal: {
       email: string;
       name: string;
+      role: "admin" | "user";
       password: string;
       confirm_password: string;
     }) => {
@@ -179,6 +180,7 @@ export const useAddUserMutation = () => {
     mutationFn: async (newUserVal: {
       email: string;
       name: string;
+      role: "admin" | "user";
       password: string;
       confirm_password: string;
     }) => {
