@@ -38,7 +38,7 @@ const CrimeDetail:FC<{toggleModal: (value: CrimesDetailModalProps) => void}> = (
                         </Table.Thead>
                         <Table.Tbody>
                             <Table.Tr>
-                                <Table.Td>{data.name}</Table.Td>
+                                <Table.Td>{data.criminal.name}</Table.Td>
                                 <Table.Td>{data.typeOfCrime}</Table.Td>
                                 <Table.Td>{data.sectionOfLaw}</Table.Td>
                                 <Table.Td>{data.mobFileNo}</Table.Td>

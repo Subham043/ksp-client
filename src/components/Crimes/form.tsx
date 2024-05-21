@@ -3,7 +3,7 @@ import { useToast } from "../../hooks/useToast";
 import { useForm } from "@mantine/form";
 import { yupResolver } from "mantine-form-yup-resolver";
 import { DateInput } from '@mantine/dates';
-import { Button, MultiSelect, Select, SimpleGrid, TextInput } from "@mantine/core";
+import { Box, Button, InputLabel, MultiSelect, Select, SimpleGrid, Text, TextInput } from "@mantine/core";
 import { isAxiosError } from "axios";
 import { useAddCrimeMutation, useUpdateCrimeMutation, useCrimeQuery } from "../../hooks/data/crimes";
 import { MutateOptions } from "@tanstack/react-query";
@@ -13,6 +13,7 @@ import { CluesLeft, LanguagesKnown, PlaceAttacked, PropertiesAttacked, SchemaTyp
 import ErrorBoundary from "../Layout/ErrorBoundary";
 import debounce from "lodash.debounce";
 import { useCriminalsSelectQuery } from "../../hooks/data/criminals";
+import ASelect from "react-dropdown-select";
 
 type CrimeFormProps = CrimesModalProps;
 type crimeMutateOptionsType = MutateOptions<CrimeType, Error, CrimeFormType, unknown>;
@@ -30,12 +31,11 @@ const CrimeForm:FC<CrimeFormProps & {toggleModal: (value: CrimesModalProps) => v
         initialValues,
         validate: yupResolver(schema),
     });
-    
+
     useEffect(() => {
         if(props.type === "Edit" && data && props.status){
-            setSearch(data.criminal ? data.criminal.toString() : "");
             form.setValues({
-                criminal: data.criminal ? data.criminal : undefined,
+                criminal: data.criminal ? data.criminal.id : undefined,
                 typeOfCrime: data.typeOfCrime ? data.typeOfCrime : undefined,
                 sectionOfLaw: data.sectionOfLaw ? data.sectionOfLaw : undefined,
                 mobFileNo: data.mobFileNo ? data.mobFileNo : undefined,
@@ -63,6 +63,7 @@ const CrimeForm:FC<CrimeFormProps & {toggleModal: (value: CrimesModalProps) => v
                 gang: data.gang ? data.gang : "No",
                 gangStrength: data.gangStrength ? data.gangStrength : undefined,
             });
+            setSearch(data.criminal ? data.criminal.id.toString() : "");
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, props.type, props.status]);
@@ -99,20 +100,29 @@ const CrimeForm:FC<CrimeFormProps & {toggleModal: (value: CrimesModalProps) => v
         <ErrorBoundary hasData={props.status && props.type==="Edit" ? (data ? true : false): true} isLoading={isLoading || isFetching} status={props.status && props.type==="Edit" ? status : "success"} error={error} hasPagination={false} refetch={refetch}>
             <form onSubmit={form.onSubmit(onSubmit)}>
                 <SimpleGrid cols={{ base: 1, sm: 2 }}>
-                    <Select
-                        label="Criminal"
-                        placeholder="Type to search for criminal"
-                        maxDropdownHeight={200}
-                        data={(criminals && criminals.criminal.length > 0) ? criminals.criminal.map((item) => ({label: `${item.name}`, value: item.id ? item.id.toString() : ""})) : []}
-                        searchable
-                        clearable
-                        nothingFoundMessage="Nothing found..."
-                        disabled={isCriminalFetching || isCriminalLoading}
-                        error={form.errors.criminal}
-                        value={form.values.criminal ? form.values.criminal.toString() : undefined}
-                        onChange={onSelectHandler}
-                        onSearchChange={searchHandler}
-                    />
+                    <Box>
+                        <InputLabel>Criminal</InputLabel>
+                        <ASelect
+                            options={(criminals && criminals.criminal.length > 0) ? criminals.criminal.map((item) => ({label: `${item.name}`, value: item.id.toString()}))
+                            : []}
+                            values={props.type === "Edit" && data && data.criminal ? [{label: `${data.criminal.name}`, value: data.criminal.id.toString()}] :[]}
+                            closeOnSelect={true}
+                            // disabled={isFetching || isLoading}
+                            onChange={(values)=> values.length>0 ? onSelectHandler(values[0].value) : onSelectHandler(null)}
+                            placeholder="Type to search for criminal" 
+                            loading={isCriminalFetching || isCriminalLoading}
+                            keepSelectedInList={true}
+                            searchFn={(searchProps) => {
+                                searchHandler(searchProps.state.search);
+                                return (criminals && criminals.criminal.length > 0)
+                                    ? criminals.criminal.map((item) => {
+                                        return { label: item.name, value: item.id.toString() };
+                                        })
+                                    : []
+                            }}
+                        />
+                        <Text color="red">{form.errors.criminal}</Text>
+                    </Box>
                     <TextInput label="MOB. File No." {...form.getInputProps('mobFileNo')} />
                 </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">

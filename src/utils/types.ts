@@ -102,13 +102,17 @@ export type CrimeType = {
   transportUsedBefore?: string | null;
   gang: "Yes" | "No";
   gangStrength?: string | null;
-  criminal: number;
-  name?: string | null;
+  criminal: {
+    id: number;
+    name: string;
+  };
   createdAt?: string | null;
 };
 
 export interface CrimeFormType
-  extends Omit<CrimeType, "id" | "createdAt" | "name"> {}
+  extends Omit<CrimeType, "id" | "createdAt" | "name" | "criminal"> {
+  criminal?: number | null;
+}
 
 export type AxiosSuccessResponseType<T> = {
   message: string;

@@ -10,7 +10,7 @@ import { page_routes } from "../../utils/page_routes";
 import ErrorBoundary from "../Layout/ErrorBoundary";
 
 
-const CrimeTableRow:FC<CrimeType & {toggleModal: (value: CrimesModalProps) => void}> = ({id, name, typeOfCrime, sectionOfLaw, mobFileNo, hsNo, createdAt, toggleModal}) => {
+const CrimeTableRow:FC<CrimeType & {toggleModal: (value: CrimesModalProps) => void}> = ({id, criminal, typeOfCrime, sectionOfLaw, mobFileNo, hsNo, createdAt, toggleModal}) => {
   const [opened, setOpened] = useState<boolean>(false);
   const deleteCrime = useDeleteCrimeMutation(id)
 
@@ -22,7 +22,7 @@ const CrimeTableRow:FC<CrimeType & {toggleModal: (value: CrimesModalProps) => vo
       <Table.Td>
           <Link to={`${page_routes.crimes.list}/${id}`}>
             <Anchor component="button" size="sm">
-              {name}
+              {criminal.name}
             </Anchor>
           </Link>
       </Table.Td>
