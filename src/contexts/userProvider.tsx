@@ -1,6 +1,5 @@
 import React, { createContext, useCallback, useMemo, useState } from "react";
 import { ChildrenType, UserType } from "../utils/types";
-import { getCookie, setCookie } from "react-use-cookie";
 
 export const UserCookieName = 'KSP_SESSION';
 
@@ -37,27 +36,28 @@ export const UserContext = createContext<UserContextType>(userDefaultValues);
 const UserProvider: React.FC<ChildrenType> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<UserType | null>(null);
-  const fetchCookie = useCallback((value:string)=>getCookie(value),[])
 
   /*
    * Function for setting user state
    */
   const userHandler = useCallback(async (data: UserType) => {
+    window.localStorage.setItem(UserCookieName, btoa(JSON.stringify(data)));
     setUser(data);
     setIsAuthenticated(true);
-    setCookie(UserCookieName, btoa(JSON.stringify(data)));
   }, []);
 
   const removeUser = useCallback(() => {
     setUser(null);
     setIsAuthenticated(false);
+    window.localStorage.removeItem(UserCookieName);
   }, []);
 
   const userCookieData = useMemo(()=>{
-    const cookie = fetchCookie(UserCookieName);
-    if(cookie.length>0) {
+    const userData = window.localStorage.getItem(UserCookieName);
+    console.log(userData);
+    if(userData && userData.length>0) {
       try {
-        const encryptedString = atob(cookie);
+        const encryptedString = atob(userData);
         const decryptedData = JSON.parse(encryptedString) as UserType|null;
         if(decryptedData){
           return decryptedData as UserType;
@@ -69,7 +69,7 @@ const UserProvider: React.FC<ChildrenType> = ({ children }) => {
       }
     }
     return undefined;
-  }, [fetchCookie]);
+  }, []);
 
   return (
     <UserContext.Provider
