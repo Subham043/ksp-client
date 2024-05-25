@@ -28,7 +28,7 @@ const CrimeDetail:FC<{toggleModal: (value: CrimesDetailModalProps) => void}> = (
                     <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
                         <Table.Thead bg="main">
                             <Table.Tr>
-                                <Table.Th style={{color: 'white'}}>Name</Table.Th>
+                                <Table.Th style={{color: 'white'}}>Names</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Type of Crime</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Section Of Law</Table.Th>
                                 <Table.Th style={{color: 'white'}}>M.O.B. File No</Table.Th>
@@ -38,7 +38,7 @@ const CrimeDetail:FC<{toggleModal: (value: CrimesDetailModalProps) => void}> = (
                         </Table.Thead>
                         <Table.Tbody>
                             <Table.Tr>
-                                <Table.Td>{data.criminal.name}</Table.Td>
+                                <Table.Td>{data.criminals.map((criminal) => criminal.criminal.name).join(', ')}</Table.Td>
                                 <Table.Td>{data.typeOfCrime}</Table.Td>
                                 <Table.Td>{data.sectionOfLaw}</Table.Td>
                                 <Table.Td>{data.mobFileNo}</Table.Td>

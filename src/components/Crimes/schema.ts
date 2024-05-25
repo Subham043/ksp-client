@@ -6,7 +6,7 @@ enum Gang {
 }
 
 export type SchemaType = {
-  criminal: number;
+  criminals: (number | undefined)[];
   typeOfCrime: string;
   sectionOfLaw: string;
   mobFileNo?: string;
@@ -36,7 +36,7 @@ export type SchemaType = {
 };
 
 export const initialValues: SchemaType = {
-  criminal: 0,
+  criminals: [],
   typeOfCrime: "",
   sectionOfLaw: "",
   mobFileNo: undefined,
@@ -66,9 +66,11 @@ export const initialValues: SchemaType = {
 };
 
 export const schema: yup.ObjectSchema<SchemaType> = yup.object({
-  criminal: yup
-    .number()
-    .typeError("Criminal must be a number")
+  criminals: yup
+    .array()
+    .typeError("Criminal must be an array")
+    .of(yup.number())
+    .min(1, "Criminal is required")
     .required("Criminal is required"),
   typeOfCrime: yup
     .string()

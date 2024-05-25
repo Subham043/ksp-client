@@ -10,7 +10,7 @@ import { page_routes } from "../../utils/page_routes";
 import ErrorBoundary from "../Layout/ErrorBoundary";
 
 
-const CrimeTableRow:FC<CrimeType & {toggleModal: (value: CrimesModalProps) => void}> = ({id, criminal, typeOfCrime, sectionOfLaw, mobFileNo, hsNo, createdAt, toggleModal}) => {
+const CrimeTableRow:FC<CrimeType & {toggleModal: (value: CrimesModalProps) => void}> = ({id, criminals, typeOfCrime, sectionOfLaw, mobFileNo, hsNo, createdAt, toggleModal}) => {
   const [opened, setOpened] = useState<boolean>(false);
   const deleteCrime = useDeleteCrimeMutation(id)
 
@@ -22,7 +22,7 @@ const CrimeTableRow:FC<CrimeType & {toggleModal: (value: CrimesModalProps) => vo
       <Table.Td>
           <Link to={`${page_routes.crimes.list}/${id}`}>
             <Anchor component="button" size="sm">
-              {criminal.name}
+              {criminals.map((criminal) => criminal.criminal.name).join(', ')}
             </Anchor>
           </Link>
       </Table.Td>
@@ -96,7 +96,7 @@ const CrimeTable:FC<{toggleModal: (value: CrimesModalProps) => void}> = (props) 
           <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
             <Table.Thead bg="main">
               <Table.Tr>
-                <Table.Th style={{color: 'white'}}>Name</Table.Th>
+                <Table.Th style={{color: 'white'}}>Names</Table.Th>
                 <Table.Th style={{color: 'white'}}>Type of Crime</Table.Th>
                 <Table.Th style={{color: 'white'}}>Section Of Law</Table.Th>
                 <Table.Th style={{color: 'white'}}>M.O.B. File No</Table.Th>

@@ -35,7 +35,7 @@ const CrimeForm:FC<CrimeFormProps & {toggleModal: (value: CrimesModalProps) => v
     useEffect(() => {
         if(props.type === "Edit" && data && props.status){
             form.setValues({
-                criminal: data.criminal ? data.criminal.id : undefined,
+                criminals: data.criminals ? data.criminals.map((criminal) => criminal.criminal.id) : [],
                 typeOfCrime: data.typeOfCrime ? data.typeOfCrime : undefined,
                 sectionOfLaw: data.sectionOfLaw ? data.sectionOfLaw : undefined,
                 mobFileNo: data.mobFileNo ? data.mobFileNo : undefined,
@@ -63,12 +63,12 @@ const CrimeForm:FC<CrimeFormProps & {toggleModal: (value: CrimesModalProps) => v
                 gang: data.gang ? data.gang : "No",
                 gangStrength: data.gangStrength ? data.gangStrength : undefined,
             });
-            setSearch(data.criminal ? data.criminal.id.toString() : "");
+            // setSearch(data.criminal ? data.criminal.id.toString() : "");
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, props.type, props.status]);
 
-    const onSelectHandler = (value: string | null) => form.setFieldValue('criminal', value ? Number(value) : 0)
+    const onSelectHandler = (value: number[]) => form.setFieldValue('criminals', value)
     
     const onSubmit = async () => {
         const crimeMutateOptions:crimeMutateOptionsType = {
@@ -105,10 +105,11 @@ const CrimeForm:FC<CrimeFormProps & {toggleModal: (value: CrimesModalProps) => v
                         <ASelect
                             options={(criminals && criminals.criminal.length > 0) ? criminals.criminal.map((item) => ({label: `${item.name}`, value: item.id.toString()}))
                             : []}
-                            values={props.type === "Edit" && data && data.criminal ? [{label: `${data.criminal.name}`, value: data.criminal.id.toString()}] :[]}
+                            values={props.type === "Edit" && data && data.criminals ? data.criminals.map((item) => {return {label: `${item.criminal.name}`, value: item.criminal.id.toString()}}) :[]}
                             closeOnSelect={true}
+                            multi={true}
                             // disabled={isFetching || isLoading}
-                            onChange={(values)=> values.length>0 ? onSelectHandler(values[0].value) : onSelectHandler(null)}
+                            onChange={(values)=> onSelectHandler(values.map((item) => Number(item.value)))}
                             placeholder="Type to search for criminal" 
                             loading={isCriminalFetching || isCriminalLoading}
                             keepSelectedInList={true}
@@ -121,7 +122,7 @@ const CrimeForm:FC<CrimeFormProps & {toggleModal: (value: CrimesModalProps) => v
                                     : []
                             }}
                         />
-                        <Text color="red">{form.errors.criminal}</Text>
+                        <Text color="red">{form.errors.criminals}</Text>
                     </Box>
                     <TextInput label="MOB. File No." {...form.getInputProps('mobFileNo')} />
                 </SimpleGrid>
