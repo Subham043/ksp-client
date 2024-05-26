@@ -103,10 +103,6 @@ export type CrimeType = {
   gang: "Yes" | "No";
   gangStrength?: string | null;
   criminals: {
-    createdAt: string | null;
-    criminalId: number;
-    updatedAt: string | null;
-    crimeId: number;
     criminal: {
       id: number;
       name: string;
