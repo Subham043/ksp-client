@@ -17,6 +17,8 @@ export const api_routes = {
   users: "/users",
   criminals: "/criminals",
   crimes: "/crimes",
+  courts: "/courts",
+  jails: "/jails",
   upload: {
     images: "/upload/images",
     failed_excel: "/upload/failed-excel",

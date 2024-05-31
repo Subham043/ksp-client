@@ -35,6 +35,35 @@ export const useCrimesQuery: () => UseQueryResult<
   });
 };
 
+export const useCrimesSelectQuery: ({
+  enabled,
+  page,
+  limit,
+  search,
+}: {
+  enabled?: boolean;
+  page?: number;
+  limit?: number;
+  search?: string;
+}) => UseQueryResult<PaginationType<{ crime: CrimeType[] }>, unknown> = ({
+  enabled = true,
+  page = QueryInitialPageParam,
+  limit = QueryTotalCount,
+  search = "",
+}) => {
+  const { axios } = useAxios();
+  return useQuery({
+    queryKey: [CrimesQueryKey + "_select", page, limit, search],
+    queryFn: async () => {
+      const response = await axios.get<{
+        data: PaginationType<{ crime: CrimeType[] }>;
+      }>(api_routes.crimes + `?page=${page}&limit=${limit}&search=${search}`);
+      return response.data.data;
+    },
+    enabled,
+  });
+};
+
 export const useCrimeQuery: (
   id: number,
   enabled: boolean
