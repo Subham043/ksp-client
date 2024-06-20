@@ -10,7 +10,7 @@ import { page_routes } from "../../utils/page_routes";
 import ErrorBoundary from "../Layout/ErrorBoundary";
 
 
-const CourtTableRow:FC<CourtType & {toggleModal: (value: CourtsModalProps) => void}> = ({id, accused, crime, courtName, createdAt, toggleModal}) => {
+const CourtTableRow:FC<CourtType & {toggleModal: (value: CourtsModalProps) => void}> = ({id, accused, crime, courtName, createdAt, hearingDate, nextHearingDate, toggleModal}) => {
   const [opened, setOpened] = useState<boolean>(false);
   const deleteCourt = useDeleteCourtMutation(id)
 
@@ -19,6 +19,13 @@ const CourtTableRow:FC<CourtType & {toggleModal: (value: CourtsModalProps) => vo
   }
   return (
     <Table.Tr>
+      <Table.Td>
+          <Link to={`${page_routes.court_details.list}/${id}`}>
+            <Anchor component="button" size="sm">
+              {id}
+            </Anchor>
+          </Link>
+      </Table.Td>
       <Table.Td>
           <Link to={`${page_routes.court_details.list}/${id}`}>
             <Anchor component="button" size="sm">
@@ -42,13 +49,13 @@ const CourtTableRow:FC<CourtType & {toggleModal: (value: CourtsModalProps) => vo
           </Text>
       </Table.Td>
       <Table.Td>
-          <Text fz="sm" fw={500}>
-              {crime?.mobFileNo}
+          <Text fz="sm" fw={800} color="blue">
+              {hearingDate && dayjs(hearingDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}
           </Text>
       </Table.Td>
       <Table.Td>
-          <Text fz="sm" fw={500}>
-              {crime?.hsNo}
+          <Text fz="sm" fw={800} color="purple">
+              {nextHearingDate && dayjs(nextHearingDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}
           </Text>
       </Table.Td>
       <Table.Td>
@@ -101,12 +108,13 @@ const CourtTable:FC<{toggleModal: (value: CourtsModalProps) => void}> = (props) 
           <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
             <Table.Thead bg="main">
               <Table.Tr>
+                <Table.Th style={{color: 'white'}}>Court ID</Table.Th>
                 <Table.Th style={{color: 'white'}}>Accused</Table.Th>
                 <Table.Th style={{color: 'white'}}>Court Name</Table.Th>
                 <Table.Th style={{color: 'white'}}>Type of Crime</Table.Th>
                 <Table.Th style={{color: 'white'}}>Section Of Law</Table.Th>
-                <Table.Th style={{color: 'white'}}>M.O.B. File No</Table.Th>
-                <Table.Th style={{color: 'white'}}>HS. No.</Table.Th>
+                <Table.Th style={{color: 'white'}}>Hearing Date</Table.Th>
+                <Table.Th style={{color: 'white'}}>Next Hearing Date</Table.Th>
                 <Table.Th style={{color: 'white'}}>Created On</Table.Th>
                 <Table.Th />
               </Table.Tr>

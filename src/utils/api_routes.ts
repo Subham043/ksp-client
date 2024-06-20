@@ -3,7 +3,7 @@
  */
 
 export const api_routes = {
-  dashboard: "/",
+  dashboard: "/dashboard",
   auth: {
     login: "/auth/login",
     forgot_password: "/auth/forgot-password",
@@ -16,6 +16,9 @@ export const api_routes = {
   },
   users: "/users",
   criminals: "/criminals",
+  pdf: {
+    crime: "/pdf/crime",
+  },
   crimes: "/crimes",
   courts: "/courts",
   jails: "/jails",

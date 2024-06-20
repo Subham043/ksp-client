@@ -60,7 +60,7 @@ const Header:FC<HeaderProps> = ({ opened, toggle, accountModalOpen }) => {
           <Group justify="flex-start" align='center'>
             <Burger opened={opened} onClick={toggle} size="sm" />
             <Text fw={800} size="md" color='main' fz={'h4'}>
-              CRIME MONITORING INTELLIGENCE SYSTEM
+              CRIMES & CRIMINAL MONITORING CELL
             </Text>
           </Group>
 

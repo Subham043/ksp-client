@@ -28,23 +28,25 @@ const CourtDetail:FC<{toggleModal: (value: CourtsDetailModalProps) => void}> = (
                     <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
                         <Table.Thead bg="main">
                             <Table.Tr>
+                                <Table.Th style={{color: 'white'}}>Court ID</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Names</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Court Name</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Type of Crime</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Section Of Law</Table.Th>
-                                <Table.Th style={{color: 'white'}}>M.O.B. File No</Table.Th>
-                                <Table.Th style={{color: 'white'}}>HS. No.</Table.Th>
+                                <Table.Th style={{color: 'white'}}>Hearing Date</Table.Th>
+                                <Table.Th style={{color: 'white'}}>Next Hearing Date</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Created On</Table.Th>
                             </Table.Tr>
                         </Table.Thead>
                         <Table.Tbody>
                             <Table.Tr>
+                                <Table.Td>{data.id}</Table.Td>
                                 <Table.Td>{data.accused?.name}</Table.Td>
                                 <Table.Td>{data.courtName}</Table.Td>
                                 <Table.Td>{data.crime?.typeOfCrime}</Table.Td>
                                 <Table.Td>{data.crime?.sectionOfLaw}</Table.Td>
-                                <Table.Td>{data.crime?.mobFileNo}</Table.Td>
-                                <Table.Td>{data.crime?.hsNo}</Table.Td>
+                                <Table.Td><Text color="blue" fw={800}>{data.hearingDate && dayjs(data.hearingDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Text></Table.Td>
+                                <Table.Td><Text color="purple" fw={800}>{data.nextHearingDate && dayjs(data.nextHearingDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Text></Table.Td>
                                 <Table.Td>{data.createdAt && dayjs(data.createdAt.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY hh:mm a')}</Table.Td>
                             </Table.Tr>
                         </Table.Tbody>
@@ -62,12 +64,12 @@ const CourtDetail:FC<{toggleModal: (value: CourtsDetailModalProps) => void}> = (
                         <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
                             <Table.Thead>
                                 <Table.Tr>
-                                    <Table.Th>Hearing Date</Table.Th>
-                                    <Table.Td>{data.hearingDate && dayjs(data.hearingDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Table.Td>
+                                    <Table.Th>M.O.B. File No</Table.Th>
+                                    <Table.Td>{data.crime?.mobFileNo}</Table.Td>
                                 </Table.Tr>
                                 <Table.Tr>
-                                    <Table.Th>Next Hearing Date</Table.Th>
-                                    <Table.Td>{data.nextHearingDate && dayjs(data.nextHearingDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Table.Td>
+                                    <Table.Th>HS. No.</Table.Th>
+                                    <Table.Td>{data.crime?.hsNo}</Table.Td>
                                 </Table.Tr>
                                 <Table.Tr>
                                     <Table.Th>CC/SC No.</Table.Th>

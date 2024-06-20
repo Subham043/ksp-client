@@ -10,7 +10,7 @@ import { page_routes } from "../../utils/page_routes";
 import ErrorBoundary from "../Layout/ErrorBoundary";
 
 
-const JailTableRow:FC<JailType & {toggleModal: (value: JailsModalProps) => void}> = ({id, accused, crime, lawSection, policeStation, createdAt, toggleModal}) => {
+const JailTableRow:FC<JailType & {toggleModal: (value: JailsModalProps) => void}> = ({id, accused, crime, lawSection, policeStation, jailEntryDate, jailReleaseDate, createdAt, toggleModal}) => {
   const [opened, setOpened] = useState<boolean>(false);
   const deleteJail = useDeleteJailMutation(id)
 
@@ -19,6 +19,13 @@ const JailTableRow:FC<JailType & {toggleModal: (value: JailsModalProps) => void}
   }
   return (
     <Table.Tr>
+      <Table.Td>
+          <Link to={`${page_routes.punishment.list}/${id}`}>
+            <Anchor component="button" size="sm">
+              {id}
+            </Anchor>
+          </Link>
+      </Table.Td>
       <Table.Td>
           <Link to={`${page_routes.punishment.list}/${id}`}>
             <Anchor component="button" size="sm">
@@ -42,13 +49,13 @@ const JailTableRow:FC<JailType & {toggleModal: (value: JailsModalProps) => void}
           </Text>
       </Table.Td>
       <Table.Td>
-          <Text fz="sm" fw={500}>
-              {crime?.mobFileNo}
+          <Text fz="sm" fw={800} color="blue">
+              {jailEntryDate && dayjs(jailEntryDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}
           </Text>
       </Table.Td>
       <Table.Td>
-          <Text fz="sm" fw={500}>
-              {crime?.hsNo}
+          <Text fz="sm" fw={800} color="purple">
+              {jailReleaseDate && dayjs(jailReleaseDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}
           </Text>
       </Table.Td>
       <Table.Td>
@@ -101,12 +108,13 @@ const JailTable:FC<{toggleModal: (value: JailsModalProps) => void}> = (props) =>
           <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
             <Table.Thead bg="main">
               <Table.Tr>
+                <Table.Th style={{color: 'white'}}>Jail ID</Table.Th>
                 <Table.Th style={{color: 'white'}}>Accused</Table.Th>
                 <Table.Th style={{color: 'white'}}>Police Station</Table.Th>
                 <Table.Th style={{color: 'white'}}>Type of Crime</Table.Th>
                 <Table.Th style={{color: 'white'}}>Section Of Law</Table.Th>
-                <Table.Th style={{color: 'white'}}>M.O.B. File No</Table.Th>
-                <Table.Th style={{color: 'white'}}>HS. No.</Table.Th>
+                <Table.Th style={{color: 'white'}}>Jail Entry Date</Table.Th>
+                <Table.Th style={{color: 'white'}}>Jail Release Date</Table.Th>
                 <Table.Th style={{color: 'white'}}>Created On</Table.Th>
                 <Table.Th />
               </Table.Tr>

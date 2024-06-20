@@ -28,23 +28,25 @@ const JailDetail:FC<{toggleModal: (value: JailsDetailModalProps) => void}> = (pr
                     <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
                         <Table.Thead bg="main">
                             <Table.Tr>
+                                <Table.Th style={{color: 'white'}}>Jail ID</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Names</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Police Station</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Type of Crime</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Section Of Law</Table.Th>
-                                <Table.Th style={{color: 'white'}}>M.O.B. File No</Table.Th>
-                                <Table.Th style={{color: 'white'}}>HS. No.</Table.Th>
+                                <Table.Th style={{color: 'white'}}>Jail Entry Date</Table.Th>
+                                <Table.Th style={{color: 'white'}}>Jail Release Date</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Created On</Table.Th>
                             </Table.Tr>
                         </Table.Thead>
                         <Table.Tbody>
                             <Table.Tr>
+                                <Table.Td>{data.id}</Table.Td>
                                 <Table.Td>{data.accused?.name}</Table.Td>
                                 <Table.Td>{data.policeStation}</Table.Td>
                                 <Table.Td>{data.crime?.typeOfCrime}</Table.Td>
                                 <Table.Td>{data.lawSection}</Table.Td>
-                                <Table.Td>{data.crime?.mobFileNo}</Table.Td>
-                                <Table.Td>{data.crime?.hsNo}</Table.Td>
+                                <Table.Td><Text color="blue" fw={800}>{data.jailEntryDate && dayjs(data.jailEntryDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Text></Table.Td>
+                                <Table.Td><Text color="purple" fw={800}>{data.jailReleaseDate && dayjs(data.jailReleaseDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Text></Table.Td>
                                 <Table.Td>{data.createdAt && dayjs(data.createdAt.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY hh:mm a')}</Table.Td>
                             </Table.Tr>
                         </Table.Tbody>
@@ -62,12 +64,12 @@ const JailDetail:FC<{toggleModal: (value: JailsDetailModalProps) => void}> = (pr
                         <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
                             <Table.Thead>
                                 <Table.Tr>
-                                    <Table.Th>Jail Entry Date</Table.Th>
-                                    <Table.Td>{data.jailEntryDate && dayjs(data.jailEntryDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Table.Td>
+                                    <Table.Th>M.O.B. File No</Table.Th>
+                                    <Table.Td>{data.crime?.mobFileNo}</Table.Td>
                                 </Table.Tr>
                                 <Table.Tr>
-                                    <Table.Th>Jail Release Date</Table.Th>
-                                    <Table.Td>{data.jailReleaseDate && dayjs(data.jailReleaseDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Table.Td>
+                                    <Table.Th>HS. No.</Table.Th>
+                                    <Table.Td>{data.crime?.hsNo}</Table.Td>
                                 </Table.Tr>
                                 <Table.Tr>
                                     <Table.Th>UTP No.</Table.Th>

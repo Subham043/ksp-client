@@ -216,6 +216,13 @@ export type UserQueryType = {
   createdAt: Date;
 };
 
+export type DashboardQueryType = {
+  crimes: number;
+  criminals: number;
+  courts: number;
+  punishments: number;
+};
+
 export type PaginationMainType = {
   total: number;
   current_page: number;

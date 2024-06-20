@@ -22,6 +22,7 @@ export const useExcelExport:ExcelExportHookType = () => {
     const [searchParams] = useSearchParams();
     const [excelLoading, setExcelLoading] = useState<boolean>(false);
     const exportExcel = async (excel_url: string, excel_file_name: string) => {
+        setExcelLoading(true);
         try {
             const search = searchParams.get("search") || "";
             const response = await axios.get(`${excel_url}?search=${search}`, {responseType: 'blob'});

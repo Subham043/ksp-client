@@ -1,10 +1,9 @@
 import { FC, useState } from "react"
 import { Table, Group, Text, ActionIcon, rem, Popover, Anchor } from '@mantine/core';
-import { IconCheck, IconEye, IconFileTypePdf, IconPencil, IconTrash, IconX } from '@tabler/icons-react';
+import { IconCheck, IconEye, IconFileTypePdf, IconTrash, IconX } from '@tabler/icons-react';
 import { CrimeType } from "../../utils/types";
 import { Link } from "react-router-dom";
 import dayjs from 'dayjs';
-import { CrimesModalProps } from "../../pages/crimes/list";
 import { useDeleteCrimeMutation, useCrimesQuery } from "../../hooks/data/crimes";
 import { page_routes } from "../../utils/page_routes";
 import ErrorBoundary from "../Layout/ErrorBoundary";
@@ -12,7 +11,7 @@ import { usePdfExport } from "../../hooks/usePdfExport";
 import { api_routes } from "../../utils/api_routes";
 
 
-const CrimeTableRow:FC<CrimeType & {toggleModal: (value: CrimesModalProps) => void}> = ({id, criminals, typeOfCrime, sectionOfLaw, mobFileNo, hsNo, createdAt, toggleModal}) => {
+const CrimeTableRow:FC<CrimeType> = ({id, criminals, typeOfCrime, sectionOfLaw, mobFileNo, hsNo, createdAt}) => {
   const [opened, setOpened] = useState<boolean>(false);
   const deleteCrime = useDeleteCrimeMutation(id)
   const { exportPdf, pdfLoading } = usePdfExport();
@@ -69,9 +68,6 @@ const CrimeTableRow:FC<CrimeType & {toggleModal: (value: CrimesModalProps) => vo
                   <IconEye style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
               </ActionIcon>
             </Link>
-            <ActionIcon variant="subtle" color="gray" onClick={() => toggleModal({status: true, type: 'Edit', id: id})}>
-                <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-            </ActionIcon>
             <ActionIcon variant="subtle" color="indigo" onClick={() => exportPdfHandler()} loading={pdfLoading} disabled={pdfLoading}>
                 <IconFileTypePdf style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
             </ActionIcon>
@@ -101,11 +97,11 @@ const CrimeTableRow:FC<CrimeType & {toggleModal: (value: CrimesModalProps) => vo
   )
 }
 
-const CrimeTable:FC<{toggleModal: (value: CrimesModalProps) => void}> = (props) => {
+const Crimes:FC = () => {
   const {data:crimes, isFetching, isLoading, status, error, refetch} = useCrimesQuery();
   return (
     <>
-      <ErrorBoundary hasData={crimes ? crimes.crime.length>0 : false} isLoading={isLoading || isFetching} status={status} error={error} hasPagination={true} current_page={crimes?.current_page} last_page={crimes?.last_page} refetch={refetch}>
+      <ErrorBoundary hasData={crimes ? crimes.crime.length>0 : false} isLoading={isLoading || isFetching} status={status} error={error} hasPagination={false} current_page={crimes?.current_page} last_page={crimes?.last_page} refetch={refetch}>
         <Table.ScrollContainer minWidth={800}>
           <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
             <Table.Thead bg="main">
@@ -121,7 +117,7 @@ const CrimeTable:FC<{toggleModal: (value: CrimesModalProps) => void}> = (props) 
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>{
-              (crimes ? crimes.crime : []).map((item) => <CrimeTableRow key={item.id} {...item} toggleModal={props.toggleModal} />)
+              (crimes ? crimes.crime : []).map((item) => <CrimeTableRow key={item.id} {...item} />)
             }</Table.Tbody>
           </Table>
         </Table.ScrollContainer>
@@ -130,4 +126,4 @@ const CrimeTable:FC<{toggleModal: (value: CrimesModalProps) => void}> = (props) 
   );
 }
 
-export default CrimeTable
+export default Crimes

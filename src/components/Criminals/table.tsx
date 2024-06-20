@@ -22,6 +22,13 @@ const CriminalTableRow:FC<CriminalType & {toggleModal: (value: CriminalsModalPro
       <Table.Td>
           <Link to={`${page_routes.criminals.list}/${id}`}>
             <Anchor component="button" size="sm">
+              {id}
+            </Anchor>
+          </Link>
+      </Table.Td>
+      <Table.Td>
+          <Link to={`${page_routes.criminals.list}/${id}`}>
+            <Anchor component="button" size="sm">
               {name}
             </Anchor>
           </Link>
@@ -96,6 +103,7 @@ const CriminalTable:FC<{toggleModal: (value: CriminalsModalProps) => void}> = (p
           <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
             <Table.Thead bg="main">
               <Table.Tr>
+                <Table.Th style={{color: 'white'}}>Criminal ID</Table.Th>
                 <Table.Th style={{color: 'white'}}>Name</Table.Th>
                 <Table.Th style={{color: 'white'}}>Sex</Table.Th>
                 <Table.Th style={{color: 'white'}}>Aadhar No</Table.Th>

@@ -32,6 +32,7 @@ const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void
                     <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
                         <Table.Thead bg="main">
                             <Table.Tr>
+                                <Table.Th style={{color: 'white'}}>Criminal ID</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Name</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Sex</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Aadhar Number</Table.Th>
@@ -42,6 +43,7 @@ const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void
                         </Table.Thead>
                         <Table.Tbody>
                             <Table.Tr>
+                                <Table.Td>{data.id}</Table.Td>
                                 <Table.Td>{data.name}</Table.Td>
                                 <Table.Td>{data.sex}</Table.Td>
                                 <Table.Td>{data.aadhar_no}</Table.Td>
