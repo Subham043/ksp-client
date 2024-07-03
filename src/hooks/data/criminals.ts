@@ -190,11 +190,17 @@ const criminalFormData: (data: CriminalFormType) => FormData = (data) => {
   if (data.aadhar_no) {
     formData.append("aadhar_no", data.aadhar_no);
   }
-  if (data.relation_name) {
-    formData.append("relation_name", data.relation_name);
+  if (data.father_name) {
+    formData.append("father_name", data.father_name);
   }
-  if (data.relation_type) {
-    formData.append("relation_type", data.relation_type);
+  if (data.mother_name) {
+    formData.append("mother_name", data.mother_name);
+  }
+  if (data.spouse_name) {
+    formData.append("spouse_name", data.spouse_name);
+  }
+  if (data.religion) {
+    formData.append("religion", data.religion);
   }
   if (data.caste) {
     formData.append("caste", data.caste);

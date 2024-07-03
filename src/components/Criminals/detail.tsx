@@ -36,8 +36,8 @@ const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void
                                 <Table.Th style={{color: 'white'}}>Name</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Sex</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Aadhar Number</Table.Th>
-                                <Table.Th style={{color: 'white'}}>Relation Name</Table.Th>
-                                <Table.Th style={{color: 'white'}}>Relation Type</Table.Th>
+                                <Table.Th style={{color: 'white'}}>Religion</Table.Th>
+                                <Table.Th style={{color: 'white'}}>Caste</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Created On</Table.Th>
                             </Table.Tr>
                         </Table.Thead>
@@ -47,8 +47,8 @@ const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void
                                 <Table.Td>{data.name}</Table.Td>
                                 <Table.Td>{data.sex}</Table.Td>
                                 <Table.Td>{data.aadhar_no}</Table.Td>
-                                <Table.Td>{data.relation_name}</Table.Td>
-                                <Table.Td>{data.relation_type}</Table.Td>
+                                <Table.Td>{data.religion}</Table.Td>
+                                <Table.Td>{data.caste}</Table.Td>
                                 <Table.Td>{dayjs(data.createdAt.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY hh:mm a')}</Table.Td>
                             </Table.Tr>
                         </Table.Tbody>
@@ -147,8 +147,16 @@ const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void
                                     <Table.Td>{data.phone}</Table.Td>
                                 </Table.Tr>
                                 <Table.Tr>
-                                    <Table.Th>Caste</Table.Th>
-                                    <Table.Td>{data.caste}</Table.Td>
+                                    <Table.Th>Father's Name</Table.Th>
+                                    <Table.Td>{data.father_name}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Mother's Name</Table.Th>
+                                    <Table.Td>{data.mother_name}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Spouse's Name</Table.Th>
+                                    <Table.Td>{data.spouse_name}</Table.Td>
                                 </Table.Tr>
                                 <Table.Tr>
                                     <Table.Th>Occupation</Table.Th>

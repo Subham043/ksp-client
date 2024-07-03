@@ -10,7 +10,7 @@ import { page_routes } from "../../utils/page_routes";
 import ErrorBoundary from "../Layout/ErrorBoundary";
 
 
-const CriminalTableRow:FC<CriminalType & {toggleModal: (value: CriminalsModalProps) => void}> = ({id, name, sex, aadhar_no, relation_name, relation_type, createdAt, toggleModal}) => {
+const CriminalTableRow:FC<CriminalType & {toggleModal: (value: CriminalsModalProps) => void}> = ({id, name, sex, aadhar_no, religion, caste, createdAt, toggleModal}) => {
   const [opened, setOpened] = useState<boolean>(false);
   const deleteCriminal = useDeleteCriminalMutation(id)
 
@@ -45,12 +45,12 @@ const CriminalTableRow:FC<CriminalType & {toggleModal: (value: CriminalsModalPro
       </Table.Td>
       <Table.Td>
           <Text fz="sm" fw={500}>
-              {relation_name}
+              {religion}
           </Text>
       </Table.Td>
       <Table.Td>
           <Text fz="sm" fw={500}>
-              {relation_type}
+              {caste}
           </Text>
       </Table.Td>
       <Table.Td>
@@ -107,8 +107,8 @@ const CriminalTable:FC<{toggleModal: (value: CriminalsModalProps) => void}> = (p
                 <Table.Th style={{color: 'white'}}>Name</Table.Th>
                 <Table.Th style={{color: 'white'}}>Sex</Table.Th>
                 <Table.Th style={{color: 'white'}}>Aadhar No</Table.Th>
-                <Table.Th style={{color: 'white'}}>Relation Name</Table.Th>
-                <Table.Th style={{color: 'white'}}>Relation Type</Table.Th>
+                <Table.Th style={{color: 'white'}}>Religion</Table.Th>
+                <Table.Th style={{color: 'white'}}>Caste</Table.Th>
                 <Table.Th style={{color: 'white'}}>Created On</Table.Th>
                 <Table.Th />
               </Table.Tr>

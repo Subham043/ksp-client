@@ -6,13 +6,6 @@ enum Sex {
   Others = "Others",
 }
 
-enum RelationType {
-  Father = "Father",
-  Husband = "Husband",
-  Mother = "Mother",
-  Wife = "Wife",
-}
-
 export type SchemaType = {
   name: string;
   sex: "Male" | "Female" | "Others";
@@ -23,8 +16,10 @@ export type SchemaType = {
   aadhar_no?: string | undefined;
   aadhar_photo?: File | undefined;
   photo?: File | undefined;
-  relation_name?: string | undefined;
-  relation_type?: "Father" | "Husband" | "Mother" | "Wife" | undefined;
+  father_name?: string | undefined;
+  mother_name?: string | undefined;
+  spouse_name?: string | undefined;
+  religion?: string | undefined;
   caste?: string | undefined;
   fpb_sl_no?: string | undefined;
   fpb_classn_no?: string | undefined;
@@ -63,8 +58,10 @@ export const initialValues: SchemaType = {
   aadhar_no: undefined,
   aadhar_photo: undefined,
   photo: undefined,
-  relation_name: undefined,
-  relation_type: undefined,
+  father_name: undefined,
+  mother_name: undefined,
+  spouse_name: undefined,
+  religion: undefined,
   caste: undefined,
   fpb_sl_no: undefined,
   fpb_classn_no: undefined,
@@ -112,10 +109,19 @@ export const schema: yup.ObjectSchema<SchemaType> = yup.object({
     .string()
     .typeError("Aadhar Number must be a string")
     .optional(),
-  relation_name: yup
+  father_name: yup
     .string()
-    .typeError("Relation Name must be a string")
+    .typeError("Father Name must be a string")
     .optional(),
+  mother_name: yup
+    .string()
+    .typeError("Mother Name must be a string")
+    .optional(),
+  spouse_name: yup
+    .string()
+    .typeError("Spouse Name must be a string")
+    .optional(),
+  religion: yup.string().typeError("Religion must be a string").optional(),
   caste: yup.string().typeError("Caste must be a string").optional(),
   fpb_sl_no: yup.string().typeError("FPB Sl.No must be a string").optional(),
   fpb_classn_no: yup
@@ -136,10 +142,6 @@ export const schema: yup.ObjectSchema<SchemaType> = yup.object({
     .mixed<Sex>()
     .oneOf(Object.values(Sex), "Invalid sex")
     .required("Sex is required"),
-  relation_type: yup
-    .mixed<RelationType>()
-    .oneOf(Object.values(RelationType), "Invalid relation type")
-    .optional(),
   voice: yup.string().typeError("Voice must be a string").optional(),
   build: yup.string().typeError("Build must be a string").optional(),
   complexion: yup.string().typeError("Complexion must be a string").optional(),

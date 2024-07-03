@@ -36,8 +36,10 @@ export type CriminalType = {
   aadhar_no?: string | undefined;
   aadhar_photo?: string | undefined;
   photo?: string | undefined;
-  relation_name?: string | undefined;
-  relation_type?: "Father" | "Husband" | "Mother" | "Wife" | undefined;
+  father_name?: string | undefined;
+  mother_name?: string | undefined;
+  spouse_name?: string | undefined;
+  religion?: string | undefined;
   caste?: string | undefined;
   fpb_sl_no?: string | undefined;
   fpb_classn_no?: string | undefined;

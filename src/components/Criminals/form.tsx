@@ -39,8 +39,10 @@ const CriminalForm:FC<CriminalFormProps & {toggleModal: (value: CriminalsModalPr
                 aadhar_no: data.aadhar_no ? data.aadhar_no : undefined,
                 aadhar_photo: undefined,
                 photo: undefined,
-                relation_name: data.relation_name ? data.relation_name : undefined,
-                relation_type: data.relation_type ? data.relation_type : undefined,
+                father_name: data.father_name ? data.father_name : undefined,
+                mother_name: data.mother_name ? data.mother_name : undefined,
+                spouse_name: data.spouse_name ? data.spouse_name : undefined,
+                religion: data.religion ? data.religion : undefined,
                 caste: data.caste ? data.caste : undefined,
                 fpb_sl_no: data.fpb_sl_no ? data.fpb_sl_no : undefined,
                 fpb_classn_no: data.fpb_classn_no ? data.fpb_classn_no : undefined,
@@ -101,7 +103,7 @@ const CriminalForm:FC<CriminalFormProps & {toggleModal: (value: CriminalsModalPr
     return (
         <ErrorBoundary hasData={props.status && props.type==="Edit" ? (data ? true : false): true} isLoading={isLoading || isFetching} status={props.status && props.type==="Edit" ? status : "success"} error={error} hasPagination={false} refetch={refetch}>
             <form onSubmit={form.onSubmit(onSubmit)}>
-                <SimpleGrid cols={{ base: 1, sm: 4 }}>
+                <SimpleGrid cols={{ base: 1, sm: 3 }}>
                     <TextInput withAsterisk label="Name" {...form.getInputProps('name')} />
                     <Select
                         label="Sex"
@@ -110,14 +112,14 @@ const CriminalForm:FC<CriminalFormProps & {toggleModal: (value: CriminalsModalPr
                         onChange={(value) => form.setFieldValue("sex", value ? value as 'Male' | 'Female' | 'Others' : "Male")}
                     />
                     <TextInput label="Phone" {...form.getInputProps('phone')} />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 3}} mt="md">
                     <DateInput
                         value={form.values.dob ? new Date(form.values.dob) : undefined}
                         onChange={(value) => form.setFieldValue('dob', value?.toISOString())}
                         label="Date of Birth"
                         placeholder="Date of Birth"
                     />
-                </SimpleGrid>
-                <SimpleGrid cols={{ base: 1, sm: 3}} mt="md">
                     <TextInput label="Aadhar No" {...form.getInputProps('aadhar_no')} />
                     <FileInput
                         label="Upload Aadhar Photo"
@@ -127,17 +129,16 @@ const CriminalForm:FC<CriminalFormProps & {toggleModal: (value: CriminalsModalPr
                         leftSection={<IconFileInfo size={16} />}
                         {...form.getInputProps('aadhar_photo')}
                     />
-                    <TextInput label="Caste" {...form.getInputProps('caste')} />
                 </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
-                    <TextInput label="Relation Name" {...form.getInputProps('relation_name')} />
-                    <Select
-                        label="Relation Type"
-                        data={['Husband', 'Father', 'Wife', 'Mother']}
-                        value={form.values.relation_type ? form.values.relation_type : null}
-                        onChange={(value) => form.setFieldValue("relation_type", value ? value as "Husband" | "Father" : undefined)}
-                    />
+                    <TextInput label="Religion" {...form.getInputProps('religion')} />
+                    <TextInput label="Caste" {...form.getInputProps('caste')} />
                     <TextInput label="Occupation" {...form.getInputProps('occupation')} />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
+                    <TextInput label="Father's Name" {...form.getInputProps('father_name')} />
+                    <TextInput label="Mother's Name" {...form.getInputProps('mother_name')} />
+                    <TextInput label="Spouse's Name" {...form.getInputProps('spouse_name')} />
                 </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
                     <TextInput label="Educational Qualification" {...form.getInputProps('educational_qualification')} />
