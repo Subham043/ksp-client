@@ -40,11 +40,18 @@ const JailForm:FC<JailFormProps & {toggleModal: (value: JailsModalProps) => void
                 crimeId: data.crimeId ? data.crimeId : undefined,
                 lawSection: data.lawSection ? data.lawSection : undefined,
                 policeStation: data.policeStation ? data.policeStation : undefined,
+                jailName: data.jailName ? data.jailName : undefined,
+                jailId: data.jailId ? data.jailId : undefined,
+                prisonerId: data.prisonerId ? data.prisonerId : undefined,
+                prisonerType: data.prisonerType ? data.prisonerType : undefined,
+                ward: data.ward ? data.ward : undefined,
+                barrack: data.barrack ? data.barrack : undefined,
+                registerNo: data.registerNo ? data.registerNo : undefined,
+                periodUndergone: data.periodUndergone ? data.periodUndergone : undefined,
                 utpNo: data.utpNo ? data.utpNo : undefined,
+                firstAdmissionDate: data.firstAdmissionDate ? data.firstAdmissionDate.toString() : undefined,
                 jailEntryDate: data.jailEntryDate ? data.jailEntryDate.toString() : undefined,
                 jailReleaseDate: data.jailReleaseDate ? data.jailReleaseDate.toString() : undefined,
-                jailVisitorDetail: data.jailVisitorDetail ? data.jailVisitorDetail : undefined,
-                visitorRelationship: data.visitorRelationship ? data.visitorRelationship : undefined,
                 additionalRemarks: data.additionalRemarks ? data.additionalRemarks : undefined,
             });
             // setSearch(data.criminal ? data.criminal.id.toString() : "");
@@ -128,7 +135,29 @@ const JailForm:FC<JailFormProps & {toggleModal: (value: JailsModalProps) => void
                     <TextInput label="Law Section" {...form.getInputProps('lawSection')} />
                     <TextInput label="Police Station" {...form.getInputProps('policeStation')} />
                 </SimpleGrid>
-                <SimpleGrid cols={{ base: 1, sm: 2}} mt="md">
+                <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
+                    <TextInput label="Jail Name" {...form.getInputProps('jailName')} />
+                    <TextInput label="Jail Id" {...form.getInputProps('jailId')} />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
+                    <TextInput label="Prisoner Type" {...form.getInputProps('prisonerType')} />
+                    <TextInput label="Prisoner Id" {...form.getInputProps('prisonerId')} />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
+                    <TextInput label="Ward" {...form.getInputProps('ward')} />
+                    <TextInput label="Barrack" {...form.getInputProps('barrack')} />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
+                    <TextInput label="Register No." {...form.getInputProps('registerNo')} />
+                    <TextInput label="Period Undergone" {...form.getInputProps('periodUndergone')} />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 3}} mt="md">
+                    <DateInput
+                        value={form.values.firstAdmissionDate ? new Date(form.values.firstAdmissionDate) : undefined}
+                        onChange={(value) => form.setFieldValue('firstAdmissionDate', value?.toISOString())}
+                        label="First Admission Date"
+                        placeholder="First Admission Date"
+                    />
                     <DateInput
                         value={form.values.jailEntryDate ? new Date(form.values.jailEntryDate) : undefined}
                         onChange={(value) => form.setFieldValue('jailEntryDate', value?.toISOString())}
@@ -141,10 +170,6 @@ const JailForm:FC<JailFormProps & {toggleModal: (value: JailsModalProps) => void
                         label="Jail Release Date"
                         placeholder="Jail Release Date"
                     />
-                </SimpleGrid>
-                <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
-                    <TextInput label="Jail Visitor Detail" {...form.getInputProps('jailVisitorDetail')} />
-                    <TextInput label="Visitor Relationship" {...form.getInputProps('visitorRelationship')} />
                 </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
                     <TextInput label="UTP No." {...form.getInputProps('utpNo')} />

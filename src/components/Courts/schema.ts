@@ -4,9 +4,10 @@ export type SchemaType = {
   courtName: string;
   ccScNo?: string;
   psName?: string;
-  hearingDate?: string;
-  nextHearingDate?: string;
-  attendance?: string;
+  firNo?: string;
+  // hearingDate?: string;
+  // nextHearingDate?: string;
+  // attendance?: string;
   lawyerName?: string;
   lawyerContact?: string;
   suretyProviderDetail?: string;
@@ -21,9 +22,10 @@ export const initialValues: SchemaType = {
   courtName: "",
   ccScNo: undefined,
   psName: undefined,
-  hearingDate: undefined,
-  nextHearingDate: undefined,
-  attendance: undefined,
+  firNo: undefined,
+  // hearingDate: undefined,
+  // nextHearingDate: undefined,
+  // attendance: undefined,
   lawyerName: undefined,
   lawyerContact: undefined,
   suretyProviderDetail: undefined,
@@ -41,15 +43,16 @@ export const schema: yup.ObjectSchema<SchemaType> = yup.object({
     .required("Court Name is required"),
   ccScNo: yup.string().typeError("CC/SC No. must be a string").optional(),
   psName: yup.string().typeError("PS Name must be a string").optional(),
-  hearingDate: yup
-    .string()
-    .typeError("Hearing Date must be a string")
-    .optional(),
-  nextHearingDate: yup
-    .string()
-    .typeError("Next Hearing Date must be a string")
-    .optional(),
-  attendance: yup.string().typeError("Attendance must be a string").optional(),
+  firNo: yup.string().typeError("FIR No. must be a string").optional(),
+  // hearingDate: yup
+  //   .string()
+  //   .typeError("Hearing Date must be a string")
+  //   .optional(),
+  // nextHearingDate: yup
+  //   .string()
+  //   .typeError("Next Hearing Date must be a string")
+  //   .optional(),
+  // attendance: yup.string().typeError("Attendance must be a string").optional(),
   lawyerName: yup.string().typeError("Lawyer Name must be a string").optional(),
   lawyerContact: yup
     .string()

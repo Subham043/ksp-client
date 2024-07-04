@@ -2,7 +2,6 @@ import { FC, useEffect, useState } from "react";
 import { useToast } from "../../hooks/useToast";
 import { useForm } from "@mantine/form";
 import { yupResolver } from "mantine-form-yup-resolver";
-import { DateInput } from '@mantine/dates';
 import { Box, Button, InputLabel, SimpleGrid, Text, TextInput } from "@mantine/core";
 import { isAxiosError } from "axios";
 import { useAddCourtMutation, useUpdateCourtMutation, useCourtQuery } from "../../hooks/data/courts";
@@ -41,9 +40,10 @@ const CourtForm:FC<CourtFormProps & {toggleModal: (value: CourtsModalProps) => v
                 courtName: data.courtName ? data.courtName : undefined,
                 ccScNo: data.ccScNo ? data.ccScNo : undefined,
                 psName: data.psName ? data.psName : undefined,
-                attendance: data.attendance ? data.attendance : undefined,
-                hearingDate: data.hearingDate ? data.hearingDate.toString() : undefined,
-                nextHearingDate: data.nextHearingDate ? data.nextHearingDate.toString() : undefined,
+                firNo: data.firNo ? data.firNo : undefined,
+                // attendance: data.attendance ? data.attendance : undefined,
+                // hearingDate: data.hearingDate ? data.hearingDate.toString() : undefined,
+                // nextHearingDate: data.nextHearingDate ? data.nextHearingDate.toString() : undefined,
                 lawyerName: data.lawyerName ? data.lawyerName : undefined,
                 lawyerContact: data.lawyerContact ? data.lawyerContact : undefined,
                 suretyProviderDetail: data.suretyProviderDetail ? data.suretyProviderDetail : undefined,
@@ -130,13 +130,13 @@ const CourtForm:FC<CourtFormProps & {toggleModal: (value: CourtsModalProps) => v
                 </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
                     <TextInput withAsterisk label="Court Name" {...form.getInputProps('courtName')} />
-                    <TextInput label="Attendance" {...form.getInputProps('attendance')} />
+                    <TextInput label="FIR No." {...form.getInputProps('firNo')} />
                 </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
                     <TextInput label="CC/SC No." {...form.getInputProps('ccScNo')} />
                     <TextInput label="PS Name" {...form.getInputProps('psName')} />
                 </SimpleGrid>
-                <SimpleGrid cols={{ base: 1, sm: 2}} mt="md">
+                {/* <SimpleGrid cols={{ base: 1, sm: 2}} mt="md">
                     <DateInput
                         value={form.values.hearingDate ? new Date(form.values.hearingDate) : undefined}
                         onChange={(value) => form.setFieldValue('hearingDate', value?.toISOString())}
@@ -149,7 +149,7 @@ const CourtForm:FC<CourtFormProps & {toggleModal: (value: CourtsModalProps) => v
                         label="Next Hearing Date"
                         placeholder="Next Hearing Date"
                     />
-                </SimpleGrid>
+                </SimpleGrid> */}
                 <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
                     <TextInput label="Lawyer Name" {...form.getInputProps('lawyerName')} />
                     <TextInput label="Lawyer Contact" {...form.getInputProps('lawyerContact')} />

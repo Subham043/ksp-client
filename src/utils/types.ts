@@ -123,9 +123,10 @@ export type CourtType = {
   courtName: string;
   ccScNo?: string | null | undefined;
   psName?: string | null | undefined;
-  hearingDate?: Date | null;
-  nextHearingDate?: Date | null;
-  attendance?: string | null | undefined;
+  firNo?: string | null | undefined;
+  // hearingDate?: Date | null;
+  // nextHearingDate?: Date | null;
+  // attendance?: string | null | undefined;
   lawyerName?: string | null | undefined;
   lawyerContact?: string | null | undefined;
   suretyProviderDetail?: string | null | undefined;
@@ -153,15 +154,37 @@ export type CourtType = {
 export interface CourtFormType
   extends Omit<CourtType, "id" | "createdAt" | "crime" | "accused"> {}
 
+export type HearingType = {
+  id: number;
+  judgeName?: string | null | undefined;
+  actionCode?: string | null | undefined;
+  hearingDate?: Date | null;
+  nextHearingDate?: Date | null;
+  attendance?: string | null | undefined;
+  additionalRemarks?: string | null | undefined;
+  courtId?: number | null | undefined;
+  createdAt?: Date | null;
+};
+
+export interface HearingFormType
+  extends Omit<HearingType, "id" | "createdAt" | "courtId"> {}
+
 export type JailType = {
   id: number;
   lawSection?: string | null | undefined;
   policeStation?: string | null | undefined;
+  jailName?: string | null | undefined;
+  jailId?: string | null | undefined;
+  prisonerId?: string | null | undefined;
+  prisonerType?: string | null | undefined;
+  ward?: string | null | undefined;
+  barrack?: string | null | undefined;
+  registerNo?: string | null | undefined;
+  periodUndergone?: string | null | undefined;
+  firstAdmissionDate?: Date | null;
   jailEntryDate?: Date | null;
   jailReleaseDate?: Date | null;
   utpNo?: string | null | undefined;
-  jailVisitorDetail?: string | null | undefined;
-  visitorRelationship?: string | null | undefined;
   additionalRemarks?: string | null | undefined;
   criminalId?: number | null | undefined;
   accused: {
@@ -183,6 +206,20 @@ export type JailType = {
 
 export interface JailFormType
   extends Omit<JailType, "id" | "createdAt" | "crime" | "accused"> {}
+
+export type VisitorType = {
+  id: number;
+  lawSection?: string | null | undefined;
+  visitonDate?: Date | null;
+  name?: string | null | undefined;
+  relation?: string | null | undefined;
+  additionalRemarks?: string | null | undefined;
+  jailId?: number | null | undefined;
+  createdAt?: Date | null;
+};
+
+export interface VisitorFormType
+  extends Omit<VisitorType, "id" | "createdAt" | "jailId"> {}
 
 export type AxiosSuccessResponseType<T> = {
   message: string;

@@ -1,11 +1,12 @@
 import { FC } from "react"
-import { Table, Group, Text, Button, SimpleGrid } from '@mantine/core';
+import { Table, Group, Text, Button, SimpleGrid, Box } from '@mantine/core';
 import { Link, useParams } from "react-router-dom";
 import { CourtsDetailModalProps } from "../../pages/courts/detail";
 import { useCourtQuery } from "../../hooks/data/courts";
 import ErrorBoundary from "../Layout/ErrorBoundary";
 import dayjs from "dayjs";
 import { page_routes } from "../../utils/page_routes";
+import HearingsListPage from "../../pages/courts/hearings";
 
 const CourtDetail:FC<{toggleModal: (value: CourtsDetailModalProps) => void}> = (props) => {
   const param = useParams<{courtDetailId: string}>();
@@ -33,8 +34,7 @@ const CourtDetail:FC<{toggleModal: (value: CourtsDetailModalProps) => void}> = (
                                 <Table.Th style={{color: 'white'}}>Court Name</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Type of Crime</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Section Of Law</Table.Th>
-                                <Table.Th style={{color: 'white'}}>Hearing Date</Table.Th>
-                                <Table.Th style={{color: 'white'}}>Next Hearing Date</Table.Th>
+                                <Table.Th style={{color: 'white'}}>Fir no.</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Created On</Table.Th>
                             </Table.Tr>
                         </Table.Thead>
@@ -45,8 +45,7 @@ const CourtDetail:FC<{toggleModal: (value: CourtsDetailModalProps) => void}> = (
                                 <Table.Td>{data.courtName}</Table.Td>
                                 <Table.Td>{data.crime?.typeOfCrime}</Table.Td>
                                 <Table.Td>{data.crime?.sectionOfLaw}</Table.Td>
-                                <Table.Td><Text color="blue" fw={800}>{data.hearingDate && dayjs(data.hearingDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Text></Table.Td>
-                                <Table.Td><Text color="purple" fw={800}>{data.nextHearingDate && dayjs(data.nextHearingDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Text></Table.Td>
+                                <Table.Td>{data.firNo}</Table.Td>
                                 <Table.Td>{data.createdAt && dayjs(data.createdAt.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY hh:mm a')}</Table.Td>
                             </Table.Tr>
                         </Table.Tbody>
@@ -74,10 +73,6 @@ const CourtDetail:FC<{toggleModal: (value: CourtsDetailModalProps) => void}> = (
                                 <Table.Tr>
                                     <Table.Th>CC/SC No.</Table.Th>
                                     <Table.Td>{data.ccScNo}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Attendance</Table.Th>
-                                    <Table.Td>{data.attendance}</Table.Td>
                                 </Table.Tr>
                                 <Table.Tr>
                                     <Table.Th>Lawyer Name</Table.Th>
@@ -126,6 +121,12 @@ const CourtDetail:FC<{toggleModal: (value: CourtsDetailModalProps) => void}> = (
                 </>}
             </div>
         </SimpleGrid>
+        <Box bg="transparent" mt="md">
+            <div style={{textAlign: 'center'}}>
+                <Text size="xl" fw={700} p="sm" >Hearings</Text>
+            </div>
+            <HearingsListPage />
+        </Box>
     </ErrorBoundary>
   );
 }

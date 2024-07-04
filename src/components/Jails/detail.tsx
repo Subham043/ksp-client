@@ -1,11 +1,12 @@
 import { FC } from "react"
-import { Table, Group, Text, Button, SimpleGrid } from '@mantine/core';
+import { Table, Group, Text, Button, SimpleGrid, Box } from '@mantine/core';
 import { Link, useParams } from "react-router-dom";
 import { JailsDetailModalProps } from "../../pages/jails/detail";
 import { useJailQuery } from "../../hooks/data/jails";
 import ErrorBoundary from "../Layout/ErrorBoundary";
 import dayjs from "dayjs";
 import { page_routes } from "../../utils/page_routes";
+import VisitorsListPage from "../../pages/jails/visitors";
 
 const JailDetail:FC<{toggleModal: (value: JailsDetailModalProps) => void}> = (props) => {
   const param = useParams<{punishmentId: string}>();
@@ -75,6 +76,22 @@ const JailDetail:FC<{toggleModal: (value: JailsDetailModalProps) => void}> = (pr
                                     <Table.Th>UTP No.</Table.Th>
                                     <Table.Td>{data.utpNo}</Table.Td>
                                 </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Ward</Table.Th>
+                                    <Table.Td>{data.ward}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Barrack</Table.Th>
+                                    <Table.Td>{data.barrack}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Register No</Table.Th>
+                                    <Table.Td>{data.registerNo}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>First Admission Date</Table.Th>
+                                    <Table.Td>{data.firstAdmissionDate && dayjs(data.firstAdmissionDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Table.Td>
+                                </Table.Tr>
                             </Table.Thead>
                         </Table>
                     </Table.ScrollContainer>
@@ -89,12 +106,24 @@ const JailDetail:FC<{toggleModal: (value: JailsDetailModalProps) => void}> = (pr
                         <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
                             <Table.Thead>
                                 <Table.Tr>
-                                    <Table.Th>Jail Visitor Detail</Table.Th>
-                                    <Table.Td>{data.jailVisitorDetail}</Table.Td>
+                                    <Table.Th>Jail Name</Table.Th>
+                                    <Table.Td>{data.jailName}</Table.Td>
                                 </Table.Tr>
                                 <Table.Tr>
-                                    <Table.Th>Visitor Relationship</Table.Th>
-                                    <Table.Td>{data.visitorRelationship}</Table.Td>
+                                    <Table.Th>Jail Id</Table.Th>
+                                    <Table.Td>{data.jailId}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Prisoner Id</Table.Th>
+                                    <Table.Td>{data.prisonerId}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Prisoner Type</Table.Th>
+                                    <Table.Td>{data.prisonerType}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Period Undergone</Table.Th>
+                                    <Table.Td>{data.periodUndergone}</Table.Td>
                                 </Table.Tr>
                                 <Table.Tr>
                                     <Table.Th>Additional Remarks</Table.Th>
@@ -106,6 +135,12 @@ const JailDetail:FC<{toggleModal: (value: JailsDetailModalProps) => void}> = (pr
                 </>}
             </div>
         </SimpleGrid>
+        <Box bg="transparent" mt="md">
+            <div style={{textAlign: 'center'}}>
+                <Text size="xl" fw={700} p="sm" >Visitors</Text>
+            </div>
+            <VisitorsListPage />
+        </Box>
     </ErrorBoundary>
   );
 }
