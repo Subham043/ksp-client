@@ -1,11 +1,12 @@
 import { FC } from "react"
-import { Table, Group, Text, Button, SimpleGrid } from '@mantine/core';
+import { Table, Group, Text, Button, SimpleGrid, Box } from '@mantine/core';
 import { Link, useParams } from "react-router-dom";
 import { CrimesDetailModalProps } from "../../pages/crimes/detail";
 import { useCrimeQuery } from "../../hooks/data/crimes";
 import ErrorBoundary from "../Layout/ErrorBoundary";
 import dayjs from "dayjs";
 import { page_routes } from "../../utils/page_routes";
+import CrimesByCriminalsListPage from "../../pages/crimes/crimesByCriminals";
 
 const CrimeDetail:FC<{toggleModal: (value: CrimesDetailModalProps) => void}> = (props) => {
   const param = useParams<{crimeId: string}>();
@@ -29,30 +30,34 @@ const CrimeDetail:FC<{toggleModal: (value: CrimesDetailModalProps) => void}> = (
                         <Table.Thead bg="main">
                             <Table.Tr>
                                 <Table.Th style={{color: 'white'}}>Crime ID</Table.Th>
-                                <Table.Th style={{color: 'white'}}>Names</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Type of Crime</Table.Th>
                                 <Table.Th style={{color: 'white'}}>Section Of Law</Table.Th>
-                                <Table.Th style={{color: 'white'}}>M.O.B. File No</Table.Th>
-                                <Table.Th style={{color: 'white'}}>HS. No.</Table.Th>
-                                <Table.Th style={{color: 'white'}}>Created On</Table.Th>
+                                <Table.Th style={{color: 'white'}}>FIR No</Table.Th>
+                                <Table.Th style={{color: 'white'}}>Police Station</Table.Th>
+                                <Table.Th style={{color: 'white'}}>Date of Crime</Table.Th>
                             </Table.Tr>
                         </Table.Thead>
                         <Table.Tbody>
                             <Table.Tr>
                                 <Table.Td>{data.id}</Table.Td>
-                                <Table.Td>{data.criminals.map((criminal) => criminal.criminal.name).join(', ')}</Table.Td>
                                 <Table.Td>{data.typeOfCrime}</Table.Td>
                                 <Table.Td>{data.sectionOfLaw}</Table.Td>
-                                <Table.Td>{data.mobFileNo}</Table.Td>
-                                <Table.Td>{data.hsNo}</Table.Td>
-                                <Table.Td>{data.createdAt && dayjs(data.createdAt.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY hh:mm a')}</Table.Td>
+                                <Table.Td>{data.firNo}</Table.Td>
+                                <Table.Td>{data.policeStation}</Table.Td>
+                                <Table.Td>{data.dateOfCrime && dayjs(data.dateOfCrime.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Table.Td>
                             </Table.Tr>
                         </Table.Tbody>
                     </Table>
                 </Table.ScrollContainer>
             </>}
         </div>
-        <SimpleGrid cols={{ base: 1, sm: 2 }} mb="sm">
+        <Box bg="transparent" mt="md">
+            <div style={{textAlign: 'center'}}>
+                <Text size="xl" fw={700} p="sm" color="main" >Criminals</Text>
+            </div>
+            <CrimesByCriminalsListPage />
+        </Box>
+        <SimpleGrid cols={{ base: 1, sm: 2 }} mb="sm" mt="xl">
             <div>
                 <div style={{textAlign: 'center'}}>
                     <Text size="lg" fw={700} p="sm" bg="main" color="white">Special Features</Text>
@@ -61,6 +66,10 @@ const CrimeDetail:FC<{toggleModal: (value: CrimesDetailModalProps) => void}> = (
                     <Table.ScrollContainer minWidth={'100%'}>
                         <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
                             <Table.Thead>
+                                <Table.Tr>
+                                    <Table.Th>HS. No.</Table.Th>
+                                    <Table.Td>{data.hsNo}</Table.Td>
+                                </Table.Tr>
                                 <Table.Tr>
                                     <Table.Th>HS. Opening Date</Table.Th>
                                     <Table.Td>{data.hsOpeningDate && dayjs(data.hsOpeningDate.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Table.Td>
@@ -141,6 +150,14 @@ const CrimeDetail:FC<{toggleModal: (value: CrimesDetailModalProps) => void}> = (
                                 <Table.Tr>
                                     <Table.Th>Brief Fact</Table.Th>
                                     <Table.Td>{data.briefFact}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>MOB File No.</Table.Th>
+                                    <Table.Td>{data.mobFileNo}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Created On</Table.Th>
+                                    <Table.Td>{data.createdAt && dayjs(data.createdAt.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY hh:mm a')}</Table.Td>
                                 </Table.Tr>
                             </Table.Thead>
                         </Table>

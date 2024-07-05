@@ -20,6 +20,7 @@ export const api_routes = {
     crime: "/pdf/crime",
   },
   crimes: "/crimes",
+  crimesByCriminals: "/crimes-by-criminals",
   courts: "/courts",
   hearings: "/hearings",
   jails: "/jails",

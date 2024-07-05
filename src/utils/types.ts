@@ -81,11 +81,12 @@ export type CrimeType = {
   typeOfCrime: string;
   sectionOfLaw: string;
   mobFileNo?: string | null;
+  firNo?: string | null;
+  policeStation?: string | null;
+  dateOfCrime?: string | null;
   hsNo?: string | null;
   hsOpeningDate?: string | null;
   hsClosingDate?: string | null;
-  aliases?: string | null;
-  ageWhileOpening?: string | null;
   crimeGroup?: string | null;
   crimeHead?: string | null;
   crimeClass?: string | null;
@@ -114,9 +115,42 @@ export type CrimeType = {
 };
 
 export interface CrimeFormType
-  extends Omit<CrimeType, "id" | "createdAt" | "criminals"> {
-  criminals?: (number | undefined)[] | null;
-}
+  extends Omit<CrimeType, "id" | "createdAt" | "criminals"> {}
+
+export type CrimesByCriminalsType = {
+  id: number;
+  aliases?: string | null;
+  ageWhileOpening?: string | null;
+  crimeArrestOrder?: string | null;
+  criminalId: number;
+  criminal: {
+    id: number;
+    name: string;
+    sex: "Male" | "Female" | "Others";
+    dob?: Date | null;
+    phone?: string | null;
+    aadhar_no?: string | null;
+  };
+  crimeId: number;
+  crime: {
+    id: number;
+    typeOfCrime: string;
+    sectionOfLaw: string;
+    mobFileNo?: string | null;
+    hsNo?: string | null;
+    hsOpeningDate?: Date | null;
+    hsClosingDate?: Date | null;
+    policeStation?: string | null;
+    firNo?: string | null;
+  };
+  createdAt?: string | null;
+};
+
+export interface CrimesByCriminalsFormType
+  extends Omit<
+    CrimesByCriminalsType,
+    "id" | "createdAt" | "crimeId" | "crime" | "criminal"
+  > {}
 
 export type CourtType = {
   id: number;
@@ -124,9 +158,6 @@ export type CourtType = {
   ccScNo?: string | null | undefined;
   psName?: string | null | undefined;
   firNo?: string | null | undefined;
-  // hearingDate?: Date | null;
-  // nextHearingDate?: Date | null;
-  // attendance?: string | null | undefined;
   lawyerName?: string | null | undefined;
   lawyerContact?: string | null | undefined;
   suretyProviderDetail?: string | null | undefined;

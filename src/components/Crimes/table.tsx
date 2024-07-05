@@ -12,7 +12,7 @@ import { usePdfExport } from "../../hooks/usePdfExport";
 import { api_routes } from "../../utils/api_routes";
 
 
-const CrimeTableRow:FC<CrimeType & {toggleModal: (value: CrimesModalProps) => void}> = ({id, criminals, typeOfCrime, sectionOfLaw, mobFileNo, hsNo, createdAt, toggleModal}) => {
+const CrimeTableRow:FC<CrimeType & {toggleModal: (value: CrimesModalProps) => void}> = ({id, criminals, typeOfCrime, sectionOfLaw, firNo, policeStation, dateOfCrime, toggleModal}) => {
   const [opened, setOpened] = useState<boolean>(false);
   const deleteCrime = useDeleteCrimeMutation(id)
   const { exportPdf, pdfLoading } = usePdfExport();
@@ -33,7 +33,9 @@ const CrimeTableRow:FC<CrimeType & {toggleModal: (value: CrimesModalProps) => vo
       <Table.Td>
           <Link to={`${page_routes.crimes.list}/${id}`}>
             <Anchor component="button" size="sm">
-              {criminals.map((criminal) => criminal.criminal.name).join(', ')}
+              <Text color={criminals.length>0 ? 'main' : 'red'}>
+                {criminals.length>0 ? criminals.map((criminal) => criminal.criminal.name).join(', ') : 'Add Criminals'}
+              </Text>
             </Anchor>
           </Link>
       </Table.Td>
@@ -49,17 +51,17 @@ const CrimeTableRow:FC<CrimeType & {toggleModal: (value: CrimesModalProps) => vo
       </Table.Td>
       <Table.Td>
           <Text fz="sm" fw={500}>
-              {mobFileNo}
+              {firNo}
           </Text>
       </Table.Td>
       <Table.Td>
           <Text fz="sm" fw={500}>
-              {hsNo}
+              {policeStation}
           </Text>
       </Table.Td>
       <Table.Td>
           <Text fz="sm" fw={500}>
-              {createdAt && dayjs(createdAt.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY hh:mm a')}
+              {dateOfCrime && dayjs(dateOfCrime.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}
           </Text>
       </Table.Td>
       <Table.Td>
@@ -114,9 +116,9 @@ const CrimeTable:FC<{toggleModal: (value: CrimesModalProps) => void}> = (props) 
                 <Table.Th style={{color: 'white'}}>Names</Table.Th>
                 <Table.Th style={{color: 'white'}}>Type of Crime</Table.Th>
                 <Table.Th style={{color: 'white'}}>Section Of Law</Table.Th>
-                <Table.Th style={{color: 'white'}}>M.O.B. File No</Table.Th>
-                <Table.Th style={{color: 'white'}}>HS. No.</Table.Th>
-                <Table.Th style={{color: 'white'}}>Created On</Table.Th>
+                <Table.Th style={{color: 'white'}}>FIR No</Table.Th>
+                <Table.Th style={{color: 'white'}}>Police Station</Table.Th>
+                <Table.Th style={{color: 'white'}}>Date of Crime</Table.Th>
                 <Table.Th />
               </Table.Tr>
             </Table.Thead>

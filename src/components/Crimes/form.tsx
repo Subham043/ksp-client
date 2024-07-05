@@ -1,9 +1,9 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { useToast } from "../../hooks/useToast";
 import { useForm } from "@mantine/form";
 import { yupResolver } from "mantine-form-yup-resolver";
 import { DateInput } from '@mantine/dates';
-import { Box, Button, InputLabel, MultiSelect, Select, SimpleGrid, Text, TextInput } from "@mantine/core";
+import { Button, MultiSelect, Select, SimpleGrid, TextInput } from "@mantine/core";
 import { isAxiosError } from "axios";
 import { useAddCrimeMutation, useUpdateCrimeMutation, useCrimeQuery } from "../../hooks/data/crimes";
 import { MutateOptions } from "@tanstack/react-query";
@@ -11,9 +11,6 @@ import { AxiosErrorResponseType, CrimeFormType, CrimeType } from "../../utils/ty
 import { CrimesModalProps } from "../../pages/crimes/list";
 import { CluesLeft, LanguagesKnown, PlaceAttacked, PropertiesAttacked, SchemaType, StyleAssumed, ToolsUsed, TradeMarks, TransportUsed, initialValues, schema } from "./schema";
 import ErrorBoundary from "../Layout/ErrorBoundary";
-import debounce from "lodash.debounce";
-import { useCriminalsSelectQuery } from "../../hooks/data/criminals";
-import ASelect from "react-dropdown-select";
 
 type CrimeFormProps = CrimesModalProps;
 type crimeMutateOptionsType = MutateOptions<CrimeType, Error, CrimeFormType, unknown>;
@@ -21,10 +18,7 @@ type crimeMutateOptionsType = MutateOptions<CrimeType, Error, CrimeFormType, unk
 const CrimeForm:FC<CrimeFormProps & {toggleModal: (value: CrimesModalProps) => void}> = (props) => {
 
     const {toastError} = useToast();
-    const [search, setSearch] = useState<string>("");
     const {data, isFetching, isLoading, status, error, refetch} = useCrimeQuery(props.type === "Edit" ? props.id : 0, (props.type === "Edit" && props.status && props.id>0));
-    const {data:criminals, isFetching:isCriminalFetching, isLoading:isCriminalLoading} = useCriminalsSelectQuery({search: search, enabled:props.status, page: 1, limit: 100});
-    const searchHandler = debounce((value: string) => setSearch(value), 500);
     const addCrime = useAddCrimeMutation()
     const updateCrime = useUpdateCrimeMutation(props.type === "Edit" ? props.id : 0)
     const form = useForm<SchemaType>({
@@ -35,15 +29,15 @@ const CrimeForm:FC<CrimeFormProps & {toggleModal: (value: CrimesModalProps) => v
     useEffect(() => {
         if(props.type === "Edit" && data && props.status){
             form.setValues({
-                criminals: data.criminals ? data.criminals.map((criminal) => criminal.criminal.id) : [],
                 typeOfCrime: data.typeOfCrime ? data.typeOfCrime : undefined,
                 sectionOfLaw: data.sectionOfLaw ? data.sectionOfLaw : undefined,
                 mobFileNo: data.mobFileNo ? data.mobFileNo : undefined,
+                firNo: data.firNo ? data.firNo : undefined,
+                policeStation: data.policeStation ? data.policeStation : undefined,
                 hsNo: data.hsNo ? data.hsNo : undefined,
+                dateOfCrime: data.dateOfCrime ? data.dateOfCrime : undefined,
                 hsOpeningDate: data.hsOpeningDate ? data.hsOpeningDate : undefined,
                 hsClosingDate: data.hsClosingDate ? data.hsClosingDate : undefined,
-                aliases: data.aliases ? data.aliases : undefined,
-                ageWhileOpening: data.ageWhileOpening ? data.ageWhileOpening : undefined,
                 crimeGroup: data.crimeGroup ? data.crimeGroup : undefined,
                 crimeHead: data.crimeHead ? data.crimeHead : undefined,
                 crimeClass: data.crimeClass ? data.crimeClass : undefined,
@@ -67,8 +61,6 @@ const CrimeForm:FC<CrimeFormProps & {toggleModal: (value: CrimesModalProps) => v
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, props.type, props.status]);
-
-    const onSelectHandler = (value: number[]) => form.setFieldValue('criminals', value)
     
     const onSubmit = async () => {
         const crimeMutateOptions:crimeMutateOptionsType = {
@@ -100,35 +92,17 @@ const CrimeForm:FC<CrimeFormProps & {toggleModal: (value: CrimesModalProps) => v
         <ErrorBoundary hasData={props.status && props.type==="Edit" ? (data ? true : false): true} isLoading={isLoading || isFetching} status={props.status && props.type==="Edit" ? status : "success"} error={error} hasPagination={false} refetch={refetch}>
             <form onSubmit={form.onSubmit(onSubmit)}>
                 <SimpleGrid cols={{ base: 1, sm: 2 }}>
-                    <Box>
-                        <InputLabel>Criminal</InputLabel>
-                        <ASelect
-                            options={(criminals && criminals.criminal.length > 0) ? criminals.criminal.map((item) => ({label: `${item.name}`, value: item.id.toString()}))
-                            : []}
-                            values={props.type === "Edit" && data && data.criminals ? data.criminals.map((item) => {return {label: `${item.criminal.name}`, value: item.criminal.id.toString()}}) :[]}
-                            closeOnSelect={true}
-                            multi={true}
-                            // disabled={isFetching || isLoading}
-                            onChange={(values)=> onSelectHandler(values.map((item) => Number(item.value)))}
-                            placeholder="Type to search for criminal" 
-                            loading={isCriminalFetching || isCriminalLoading}
-                            keepSelectedInList={true}
-                            searchFn={(searchProps) => {
-                                searchHandler(searchProps.state.search);
-                                return (criminals && criminals.criminal.length > 0)
-                                    ? criminals.criminal.map((item) => {
-                                        return { label: item.name, value: item.id.toString() };
-                                        })
-                                    : []
-                            }}
-                        />
-                        <Text color="red">{form.errors.criminals}</Text>
-                    </Box>
-                    <TextInput label="MOB. File No." {...form.getInputProps('mobFileNo')} />
-                </SimpleGrid>
-                <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
                     <TextInput withAsterisk label="Type of Crime" {...form.getInputProps('typeOfCrime')} />
                     <TextInput withAsterisk label="Section of Law" {...form.getInputProps('sectionOfLaw')} />
+                </SimpleGrid>
+                <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
+                    <TextInput label="MOB. File No." {...form.getInputProps('mobFileNo')} />
+                    <DateInput
+                        value={form.values.dateOfCrime ? new Date(form.values.dateOfCrime) : undefined}
+                        onChange={(value) => form.setFieldValue('dateOfCrime', value?.toISOString())}
+                        label="Date Of Crime"
+                        placeholder="Date Of Crime"
+                    />
                 </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 3}} mt="md">
                     <TextInput label="HS. No." {...form.getInputProps('hsNo')} />
@@ -146,9 +120,9 @@ const CrimeForm:FC<CrimeFormProps & {toggleModal: (value: CrimesModalProps) => v
                     />
                 </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
-                    <TextInput label="Aliases" {...form.getInputProps('aliases')} />
-                    <TextInput label="Age While Opening" {...form.getInputProps('ageWhileOpening')} />
                     <TextInput label="Brief Fact" {...form.getInputProps('briefFact')} />
+                    <TextInput label="Police Station" {...form.getInputProps('policeStation')} />
+                    <TextInput label="FIR No." {...form.getInputProps('firNo')} />
                 </SimpleGrid>
                 <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
                     <TextInput label="Crime Group" {...form.getInputProps('crimeGroup')} />

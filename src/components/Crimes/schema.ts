@@ -6,15 +6,15 @@ enum Gang {
 }
 
 export type SchemaType = {
-  criminals: (number | undefined)[];
   typeOfCrime: string;
   sectionOfLaw: string;
   mobFileNo?: string;
+  firNo?: string;
+  policeStation?: string;
+  dateOfCrime?: string;
   hsNo?: string;
   hsOpeningDate?: string;
   hsClosingDate?: string;
-  aliases?: string;
-  ageWhileOpening?: string;
   crimeGroup?: string;
   crimeHead?: string;
   crimeClass?: string;
@@ -36,15 +36,15 @@ export type SchemaType = {
 };
 
 export const initialValues: SchemaType = {
-  criminals: [],
   typeOfCrime: "",
   sectionOfLaw: "",
   mobFileNo: undefined,
+  firNo: undefined,
+  policeStation: undefined,
+  dateOfCrime: undefined,
   hsNo: undefined,
   hsOpeningDate: undefined,
   hsClosingDate: undefined,
-  aliases: undefined,
-  ageWhileOpening: undefined,
   crimeGroup: undefined,
   crimeHead: undefined,
   crimeClass: undefined,
@@ -66,12 +66,6 @@ export const initialValues: SchemaType = {
 };
 
 export const schema: yup.ObjectSchema<SchemaType> = yup.object({
-  criminals: yup
-    .array()
-    .typeError("Criminal must be an array")
-    .of(yup.number())
-    .min(1, "Criminal is required")
-    .required("Criminal is required"),
   typeOfCrime: yup
     .string()
     .typeError("Type of Crime must be a string")
@@ -84,7 +78,16 @@ export const schema: yup.ObjectSchema<SchemaType> = yup.object({
     .string()
     .typeError("Mob. File No. must be a string")
     .optional(),
+  firNo: yup.string().typeError("FIR No. must be a string").optional(),
+  policeStation: yup
+    .string()
+    .typeError("Police Station must be a string")
+    .optional(),
   hsNo: yup.string().typeError("HS. No. must be a string").optional(),
+  dateOfCrime: yup
+    .string()
+    .typeError("Date of Crime must be a string")
+    .optional(),
   hsOpeningDate: yup
     .string()
     .typeError("HS. Opening Date must be a string")
@@ -92,11 +95,6 @@ export const schema: yup.ObjectSchema<SchemaType> = yup.object({
   hsClosingDate: yup
     .string()
     .typeError("HS. Closing Date must be a string")
-    .optional(),
-  aliases: yup.string().typeError("Aliases must be a string").optional(),
-  ageWhileOpening: yup
-    .string()
-    .typeError("Age While Opening must be a string")
     .optional(),
   crimeGroup: yup.string().typeError("Crime Group must be a string").optional(),
   crimeHead: yup.string().typeError("Crime Head must be a string").optional(),
