@@ -5,7 +5,7 @@ import { CrimesByCriminalsListModalProps } from "../../pages/crimes/crimesByCrim
 
 const CrimesByCriminalModal:FC<CrimesByCriminalsListModalProps & {toggleModal: (value: CrimesByCriminalsListModalProps) => void, mainCrimeId: number}> = (props) => {
     return (
-        <Modal opened={props.status} onClose={() => props.toggleModal({status: false, type: 'Create', crimeId: props.mainCrimeId})} centered size="xl" withCloseButton={true}  title={props.type === "Edit" ? "Edit Criminal" : "Create Criminal"} overlayProps={{
+        <Modal opened={props.status} onClose={() => props.toggleModal({status: false, type: 'Create', crimeId: props.mainCrimeId})} centered size="xl" withCloseButton={true}  title={props.type === "Edit" ? "Edit Criminal" : "Add Criminal"} overlayProps={{
           backgroundOpacity: 0.55,
           blur: 3,
         }}>

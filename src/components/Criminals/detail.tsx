@@ -66,6 +66,71 @@ const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void
                         <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
                             <Table.Thead>
                                 <Table.Tr>
+                                    <Table.Th>DOB</Table.Th>
+                                    <Table.Td>{data.dob && dayjs(data.dob.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Phone</Table.Th>
+                                    <Table.Td>{data.phone}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Father's Name</Table.Th>
+                                    <Table.Td>{data.father_name}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Mother's Name</Table.Th>
+                                    <Table.Td>{data.mother_name}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Spouse's Name</Table.Th>
+                                    <Table.Td>{data.spouse_name}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Occupation</Table.Th>
+                                    <Table.Td>{data.occupation}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Educational Qualification</Table.Th>
+                                    <Table.Td>{data.educational_qualification}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>FPB Sl.No</Table.Th>
+                                    <Table.Td>{data.fpb_sl_no}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>FPB Classn.No</Table.Th>
+                                    <Table.Td>{data.fpb_classn_no}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Native PS</Table.Th>
+                                    <Table.Td>{data.native_ps}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Native District</Table.Th>
+                                    <Table.Td>{data.native_district}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Permenant Address</Table.Th>
+                                    <Table.Td>{data.permanent_address}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Present Address</Table.Th>
+                                    <Table.Td>{data.present_address}</Table.Td>
+                                </Table.Tr>
+                            </Table.Thead>
+                        </Table>
+                    </Table.ScrollContainer>
+                </>}
+            </div>
+            <div>
+                <div style={{textAlign: 'center'}}>
+                        <Text size="lg" fw={700} p="sm" bg="main" color="white">Other Information</Text>
+                    </div>
+                {(data) && <>
+                    <Table.ScrollContainer minWidth={'100%'}>
+                        <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
+                            <Table.Thead>
+                                <Table.Tr>
                                     <Table.Th>Dress Used</Table.Th>
                                     <Table.Td>{data.dressUsed}</Table.Td>
                                 </Table.Tr>
@@ -122,75 +187,6 @@ const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void
                                     <Table.Td>{data.faceHead}</Table.Td>
                                 </Table.Tr>
                                 <Table.Tr>
-                                    <Table.Th>Other parts of body</Table.Th>
-                                    <Table.Td>{data.otherPartsBody}</Table.Td>
-                                </Table.Tr>
-                            </Table.Thead>
-                        </Table>
-                    </Table.ScrollContainer>
-                </>}
-            </div>
-            <div>
-                <div style={{textAlign: 'center'}}>
-                        <Text size="lg" fw={700} p="sm" bg="main" color="white">Other Information</Text>
-                    </div>
-                {(data) && <>
-                    <Table.ScrollContainer minWidth={'100%'}>
-                        <Table verticalSpacing="sm" striped highlightOnHover withTableBorder>
-                            <Table.Thead>
-                                <Table.Tr>
-                                    <Table.Th>DOB</Table.Th>
-                                    <Table.Td>{data.dob && dayjs(data.dob.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Phone</Table.Th>
-                                    <Table.Td>{data.phone}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Father's Name</Table.Th>
-                                    <Table.Td>{data.father_name}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Mother's Name</Table.Th>
-                                    <Table.Td>{data.mother_name}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Spouse's Name</Table.Th>
-                                    <Table.Td>{data.spouse_name}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Occupation</Table.Th>
-                                    <Table.Td>{data.occupation}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Educational Qualification</Table.Th>
-                                    <Table.Td>{data.educational_qualification}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>FPB Sl.No</Table.Th>
-                                    <Table.Td>{data.fpb_sl_no}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>FPB Classn.No</Table.Th>
-                                    <Table.Td>{data.fpb_classn_no}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Native PS</Table.Th>
-                                    <Table.Td>{data.native_ps}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Native District</Table.Th>
-                                    <Table.Td>{data.native_district}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Permenant Address</Table.Th>
-                                    <Table.Td>{data.permanent_address}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
-                                    <Table.Th>Present Address</Table.Th>
-                                    <Table.Td>{data.present_address}</Table.Td>
-                                </Table.Tr>
-                                <Table.Tr>
                                     <Table.Th>Beard</Table.Th>
                                     <Table.Td>{data.beard}</Table.Td>
                                 </Table.Tr>
@@ -205,6 +201,10 @@ const CriminalDetail:FC<{toggleModal: (value: CriminalsDetailModalProps) => void
                                 <Table.Tr>
                                     <Table.Th>Nose</Table.Th>
                                     <Table.Td>{data.nose}</Table.Td>
+                                </Table.Tr>
+                                <Table.Tr>
+                                    <Table.Th>Other parts of body</Table.Th>
+                                    <Table.Td>{data.otherPartsBody}</Table.Td>
                                 </Table.Tr>
                             </Table.Thead>
                         </Table>

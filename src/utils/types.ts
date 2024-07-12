@@ -130,6 +130,8 @@ export type CrimesByCriminalsType = {
     dob?: Date | null;
     phone?: string | null;
     aadhar_no?: string | null;
+    aadhar_photo?: string | null;
+    photo?: string | null;
   };
   crimeId: number;
   crime: {
@@ -179,11 +181,18 @@ export type CourtType = {
     hsOpeningDate?: Date | null;
     hsClosingDate?: Date | null;
   } | null;
+  courtHearing: {
+    hearingDate?: Date | null;
+    nextHearingDate?: Date | null;
+  }[];
   createdAt?: Date | null;
 };
 
 export interface CourtFormType
-  extends Omit<CourtType, "id" | "createdAt" | "crime" | "accused"> {}
+  extends Omit<
+    CourtType,
+    "id" | "createdAt" | "crime" | "accused" | "courtHearing"
+  > {}
 
 export type HearingType = {
   id: number;

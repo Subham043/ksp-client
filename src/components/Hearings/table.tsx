@@ -32,12 +32,12 @@ const HearingsTableRow:FC<HearingType & {toggleModal: (value: HearingsListModalP
           </Text>
       </Table.Td>
       <Table.Td>
-          <Text fz="sm" fw={500}>
+          <Text fz="sm" fw={800} color="blue">
               {hearingDate && dayjs(hearingDate?.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}
           </Text>
       </Table.Td>
       <Table.Td>
-          <Text fz="sm" fw={500}>
+          <Text fz="sm" fw={800} color="purple">
               {nextHearingDate && dayjs(nextHearingDate?.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}
           </Text>
       </Table.Td>

@@ -10,7 +10,7 @@ import { page_routes } from "../../utils/page_routes";
 import ErrorBoundary from "../Layout/ErrorBoundary";
 
 
-const CourtTableRow:FC<CourtType & {toggleModal: (value: CourtsModalProps) => void}> = ({id, accused, crime, courtName, createdAt, firNo, toggleModal}) => {
+const CourtTableRow:FC<CourtType & {toggleModal: (value: CourtsModalProps) => void}> = ({id, accused, crime, courtName, courtHearing, createdAt, firNo, toggleModal}) => {
   const [opened, setOpened] = useState<boolean>(false);
   const deleteCourt = useDeleteCourtMutation(id)
 
@@ -51,6 +51,16 @@ const CourtTableRow:FC<CourtType & {toggleModal: (value: CourtsModalProps) => vo
       <Table.Td>
           <Text fz="sm" fw={500}>
               {firNo}
+          </Text>
+      </Table.Td>
+      <Table.Td>
+          <Text fz="sm" fw={800} color="blue">
+              {(courtHearing.length>0 && courtHearing[0].hearingDate) && dayjs(courtHearing[0].hearingDate?.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}
+          </Text>
+      </Table.Td>
+      <Table.Td>
+          <Text fz="sm" fw={800} color="purple">
+              {(courtHearing.length>0 && courtHearing[0].nextHearingDate) && dayjs(courtHearing[0].nextHearingDate?.toString()).locale(Intl.DateTimeFormat().resolvedOptions().locale).format('DD MMM YYYY')}
           </Text>
       </Table.Td>
       <Table.Td>
@@ -109,6 +119,8 @@ const CourtTable:FC<{toggleModal: (value: CourtsModalProps) => void}> = (props) 
                 <Table.Th style={{color: 'white'}}>Type of Crime</Table.Th>
                 <Table.Th style={{color: 'white'}}>Section Of Law</Table.Th>
                 <Table.Th style={{color: 'white'}}>FIR No.</Table.Th>
+                <Table.Th style={{color: 'white'}}>Hearing Date</Table.Th>
+                <Table.Th style={{color: 'white'}}>Next Hearing Date</Table.Th>
                 <Table.Th style={{color: 'white'}}>Created On</Table.Th>
                 <Table.Th />
               </Table.Tr>

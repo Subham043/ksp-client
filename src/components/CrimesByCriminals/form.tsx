@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useToast } from "../../hooks/useToast";
 import { useForm } from "@mantine/form";
 import { yupResolver } from "mantine-form-yup-resolver";
-import { Box, Button, Checkbox, Divider, InputLabel, SimpleGrid, Table, Text, TextInput } from "@mantine/core";
+import { Box, Button, Checkbox, InputLabel, SimpleGrid, Table, Text, TextInput } from "@mantine/core";
 import { isAxiosError } from "axios";
 import { useAddCrimesByCriminalsMutation, useCrimesByCriminalQuery, useUpdateCrimesByCriminalsMutation } from "../../hooks/data/crimesByCriminals";
 import { MutateOptions } from "@tanstack/react-query";
@@ -95,7 +95,7 @@ const CrimesByCriminalsForm:FC<CrimesByCriminalsFormProps & {mainCrimeId: number
                                 aadhar_no: item.aadhar_no,
                             }}))
                             : []}
-                            values={props.type === "Edit" && data && data.criminal ? [{label: `${data.criminal.name}`, value: data.criminal.id.toString(), criminal: data.criminal}] :[]}
+                            values={props.type === "Edit" && data && data.criminal ? [{label: `${data.criminal.name}`, value: data.criminal.id.toString(), criminal: {id: data.criminal.id, name: data.criminal.name, sex: data.criminal.sex, dob: data.criminal.dob ? new Date(data.criminal.dob) : undefined, phone: data.criminal.phone, aadhar_no: data.criminal.aadhar_no}}] :[]}
                             closeOnSelect={true}
                             onChange={(values)=> onSelectHandler(values.length > 0 ? parseInt(values[0].value) : 0)}
                             placeholder="Type to search for criminal" 
@@ -118,44 +118,44 @@ const CrimesByCriminalsForm:FC<CrimesByCriminalsFormProps & {mainCrimeId: number
                             }}
                             separatorRenderer={()=><div>abc</div>}
                             itemRenderer={({item, itemIndex, methods}) => <div onClick={() => methods.addItem(item)}>
-                                <Divider my="xs" label={<div style={{display: 'flex', alignItems: 'center', gap: '5px'}}>
-                                    <Checkbox
-                                        checked={methods.isSelected(item)}
-                                        onChange={() => methods.addItem(item)}
-                                    />
-                                    <Text size="md" fw={700} p="sm" color="main" tt="uppercase">{item.criminal.name}</Text>
-                                </div>} labelPosition="center" />
-                                <Table verticalSpacing="sm" striped highlightOnHover withTableBorder mb={criminals && itemIndex && criminals.criminal.length === (itemIndex+1) ? 'md' : undefined}>
-                                    <Table.Thead bg="main">
+                                <Table striped highlightOnHover withTableBorder>
+                                    <Table.Thead bg="main" display={itemIndex === 0 ? undefined : 'none'}>
                                         <Table.Tr>
-                                            <Table.Th style={{color: 'white'}}>Criminal ID</Table.Th>
-                                            <Table.Th style={{color: 'white'}}>Name</Table.Th>
-                                            <Table.Th style={{color: 'white'}}>Sex</Table.Th>
-                                            <Table.Th style={{color: 'white'}}>Aadhar No</Table.Th>
+                                            <Table.Th style={{width: '30px'}} />
+                                            <Table.Th style={{color: 'white', width: '100px'}}>ID</Table.Th>
+                                            <Table.Th style={{color: 'white', width: '100px'}}>Name</Table.Th>
+                                            <Table.Th style={{color: 'white', width: '100px'}}>Sex</Table.Th>
+                                            <Table.Th style={{color: 'white', width: '100px'}}>Aadhar No</Table.Th>
                                         </Table.Tr>
                                     </Table.Thead>
                                     <Table.Tbody>
                                         <Table.Tr>
-                                            <Table.Td>
+                                            <Table.Td style={{width: '30px'}}>
+                                                <Checkbox
+                                                    checked={methods.isSelected(item)}
+                                                    onChange={() => methods.addItem(item)}
+                                                />
+                                            </Table.Td>
+                                            <Table.Td style={{width: '100px'}}>
                                                 <Text fz="sm" fw={500}>
                                                     {item.criminal.id}
                                                 </Text>
                                             </Table.Td>
-                                            <Table.Td>
+                                            <Table.Td style={{width: '100px'}}>
                                                 <Text fz="sm" fw={500}>
                                                     {item.criminal.name}
                                                 </Text>
                                             </Table.Td>
-                                            <Table.Td>
+                                            <Table.Td style={{width: '100px'}}>
                                                 <Text fz="sm" fw={500}>
                                                     {item.criminal.sex}
                                                 </Text>
                                             </Table.Td>
-                                            <Table.Td>
+                                            {<Table.Td style={{width: '100px'}}>
                                                 <Text fz="sm" fw={500}>
                                                     {item.criminal.aadhar_no}
                                                 </Text>
-                                            </Table.Td>
+                                            </Table.Td>}
                                         </Table.Tr>
                                     </Table.Tbody>
                                 </Table>
