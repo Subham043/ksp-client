@@ -6,6 +6,7 @@ import CriminalsModal from "../../../components/Criminals/modal";
 import SearchButtonHeader from "../../../components/Layout/SearchButtonHeader";
 import { useExcelExport } from "../../../hooks/useExcelExport";
 import { api_routes } from "../../../utils/api_routes";
+import ExcelUploadModal from "../../../components/Layout/ExcelUploadModal";
 
 export type CriminalsModalProps = {
     status: boolean;
@@ -21,14 +22,17 @@ const CriminalsPage:FC = () => {
     const [modal, setModal] = useState<CriminalsModalProps>({status: false, type: 'Create'});
     const toggleModal = (value:CriminalsModalProps) => setModal(value);
     const exportExcelHandler = async () => await exportExcel(api_routes.criminals + '/export', 'criminals.xlsx');
+    const [excelModal, setExcelModal] = useState<boolean>(false);
+    const toggleExcelModal = () => setExcelModal(prev => !prev);
 
     return (
         <div>
-            <SearchButtonHeader hasButton={true} buttonText="Create" searchText="Search by Name/Aadhar no" buttonClickHandler={() => toggleModal({status: true, type: 'Create'})} hasExport={true} excelLoading={excelLoading} exportClickHandler={exportExcelHandler} hasImport={false} />
+            <SearchButtonHeader hasButton={true} buttonText="Create" searchText="Search by Name/Aadhar no" buttonClickHandler={() => toggleModal({status: true, type: 'Create'})} hasExport={true} excelLoading={excelLoading} exportClickHandler={exportExcelHandler} hasImport={true} importClickHandler={toggleExcelModal} />
             <Paper shadow="sm" className={classes.paper_background}>
                 <CriminalsTable toggleModal={toggleModal} />
             </Paper>
             <CriminalsModal {...modal} toggleModal={toggleModal} />
+            <ExcelUploadModal status={excelModal} toggleModal={toggleExcelModal} title="Criminals" uploadUrl={`${api_routes.criminals}/import`} sampleUrl="/Sample_Criminals.xlsx" />
         </div>
     )
 }

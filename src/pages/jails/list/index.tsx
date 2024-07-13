@@ -6,6 +6,7 @@ import JailsModal from "../../../components/Jails/modal";
 import SearchButtonHeader from "../../../components/Layout/SearchButtonHeader";
 import { useExcelExport } from "../../../hooks/useExcelExport";
 import { api_routes } from "../../../utils/api_routes";
+import ExcelUploadModal from "../../../components/Layout/ExcelUploadModal";
 
 export type JailsModalProps = {
     status: boolean;
@@ -21,14 +22,17 @@ const JailsPage:FC = () => {
     const [modal, setModal] = useState<JailsModalProps>({status: false, type: 'Create'});
     const toggleModal = (value:JailsModalProps) => setModal(value);
     const exportExcelHandler = async () => await exportExcel(api_routes.jails + '/export', 'jails.xlsx');
+    const [excelModal, setExcelModal] = useState<boolean>(false);
+    const toggleExcelModal = () => setExcelModal(prev => !prev);
 
     return (
         <div>
-            <SearchButtonHeader hasButton={true} buttonText="Create" searchText="Search" buttonClickHandler={() => toggleModal({status: true, type: 'Create'})} hasExport={true} excelLoading={excelLoading} exportClickHandler={exportExcelHandler} hasImport={false} />
+            <SearchButtonHeader hasButton={true} buttonText="Create" searchText="Search" buttonClickHandler={() => toggleModal({status: true, type: 'Create'})} hasExport={true} excelLoading={excelLoading} exportClickHandler={exportExcelHandler} hasImport={true} importClickHandler={toggleExcelModal} />
             <Paper shadow="sm" className={classes.paper_background}>
                 <JailsTable toggleModal={toggleModal} />
             </Paper>
             <JailsModal {...modal} toggleModal={toggleModal} />
+            <ExcelUploadModal status={excelModal} toggleModal={toggleExcelModal} title="Jail Details" uploadUrl={`${api_routes.jails}/import`} sampleUrl="/Sample_Jails.xlsx" />
         </div>
     )
 }

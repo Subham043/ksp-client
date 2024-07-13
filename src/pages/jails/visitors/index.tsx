@@ -8,6 +8,7 @@ import VisitorsDrawer from "../../../components/Visitors/drawer";
 import SearchButtonHeader from "../../../components/Layout/SearchButtonHeader";
 import { useExcelExport } from "../../../hooks/useExcelExport";
 import { api_routes } from "../../../utils/api_routes";
+import ExcelUploadModal from "../../../components/Layout/ExcelUploadModal";
 
 export type VisitorsListModalProps = {
     status: boolean;
@@ -35,15 +36,18 @@ const VisitorsListPage:FC = () => {
     const toggleModal = (value:VisitorsListModalProps) => setModal(value);
     const [drawerStatus, setDrawerStatus] = useState<VisitorsListDrawerProps>({drawerStatus: false});
     const toggleDrawer = (value:VisitorsListDrawerProps) => setDrawerStatus(value);
+    const [excelModal, setExcelModal] = useState<boolean>(false);
+    const toggleExcelModal = () => setExcelModal(prev => !prev);
 
     return (
         <div>
-            <SearchButtonHeader hasButton={true} buttonText="Create" buttonClickHandler={() => toggleModal({status: true, type: 'Create', punishmentId: Number(param.punishmentId)})} hasExport={true} excelLoading={excelLoading} exportClickHandler={exportExcelHandler} hasImport={false} />
+            <SearchButtonHeader hasButton={true} buttonText="Create" buttonClickHandler={() => toggleModal({status: true, type: 'Create', punishmentId: Number(param.punishmentId)})} hasExport={true} excelLoading={excelLoading} exportClickHandler={exportExcelHandler} hasImport={true} importClickHandler={toggleExcelModal} />
             <Paper shadow="sm" className={classes.paper_background}>
                 <VisitorsTable toggleModal={toggleModal} toggleDrawer={toggleDrawer} punishmentId={Number(param.punishmentId)} selectedData={selectedData} setSelectedData={setSelectedData} />
             </Paper>
             <VisitorsModal {...modal} mainPunishmentId={Number(param.punishmentId)} toggleModal={toggleModal} />
             <VisitorsDrawer {...drawerStatus} toggleDrawer={toggleDrawer} />
+            <ExcelUploadModal status={excelModal} toggleModal={toggleExcelModal} title="Visitors" uploadUrl={`${api_routes.visitors}/import/${param.punishmentId}`} sampleUrl="/Sample_Visitors.xlsx" />
         </div>
     )
 }
