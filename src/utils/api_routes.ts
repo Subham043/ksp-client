@@ -28,5 +28,6 @@ export const api_routes = {
   upload: {
     images: "/upload/images",
     failed_excel: "/upload/failed-excel",
+    sample_excel: "/upload/sample-excel",
   },
 } as const;

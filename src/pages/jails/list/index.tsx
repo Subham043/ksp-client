@@ -32,7 +32,7 @@ const JailsPage:FC = () => {
                 <JailsTable toggleModal={toggleModal} />
             </Paper>
             <JailsModal {...modal} toggleModal={toggleModal} />
-            <ExcelUploadModal status={excelModal} toggleModal={toggleExcelModal} title="Jail Details" uploadUrl={`${api_routes.jails}/import`} sampleUrl="/Sample_Jails.xlsx" />
+            <ExcelUploadModal status={excelModal} toggleModal={toggleExcelModal} title="Jail Details" uploadUrl={`${api_routes.jails}/import`} sampleExcel="Sample_Jails.xlsx" />
         </div>
     )
 }

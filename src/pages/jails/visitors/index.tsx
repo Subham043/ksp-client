@@ -47,7 +47,7 @@ const VisitorsListPage:FC = () => {
             </Paper>
             <VisitorsModal {...modal} mainPunishmentId={Number(param.punishmentId)} toggleModal={toggleModal} />
             <VisitorsDrawer {...drawerStatus} toggleDrawer={toggleDrawer} />
-            <ExcelUploadModal status={excelModal} toggleModal={toggleExcelModal} title="Visitors" uploadUrl={`${api_routes.visitors}/import/${param.punishmentId}`} sampleUrl="/Sample_Visitors.xlsx" />
+            <ExcelUploadModal status={excelModal} toggleModal={toggleExcelModal} title="Visitors" uploadUrl={`${api_routes.visitors}/import/${param.punishmentId}`} sampleExcel="Sample_Visitors.xlsx" />
         </div>
     )
 }

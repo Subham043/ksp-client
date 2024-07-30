@@ -32,7 +32,7 @@ const CrimesPage:FC = () => {
                 <CrimesTable toggleModal={toggleModal} />
             </Paper>
             <CrimesModal {...modal} toggleModal={toggleModal} />
-            <ExcelUploadModal status={excelModal} toggleModal={toggleExcelModal} title="Crimes" uploadUrl={`${api_routes.crimes}/import`} sampleUrl="/Sample_Crimes.xlsx" />
+            <ExcelUploadModal status={excelModal} toggleModal={toggleExcelModal} title="Crimes" uploadUrl={`${api_routes.crimes}/import`} sampleExcel="Sample_Crimes.xlsx" />
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import { Alert, Anchor, Button, FileInput, Modal, Text } from "@mantine/core";
+import { Alert, Button, FileInput, Modal, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconFileSpreadsheet } from "@tabler/icons-react";
 import { yupResolver } from "mantine-form-yup-resolver";
@@ -16,7 +16,7 @@ type ExcelUploadModalProps = {
     toggleModal: () => void;
     title: string;
     uploadUrl: string;
-    sampleUrl: string;
+    sampleExcel: string;
 
 }
 const schema = yup
@@ -27,10 +27,11 @@ const schema = yup
   })
   .required();
 
-const ExcelUploadModal:FC<ExcelUploadModalProps> = ({status, toggleModal, title, uploadUrl, sampleUrl}) => {
+const ExcelUploadModal:FC<ExcelUploadModalProps> = ({status, toggleModal, title, uploadUrl, sampleExcel}) => {
 
     const { axios } = useAxios();
     const { exportExcel, excelLoading } = useExcelExport();
+    const { exportExcel: exportSampleExcel, excelLoading: sampleExcelLoading } = useExcelExport();
     const [loading, setLoading] = useState<boolean>(false);
     const [result, setResult] = useState<{successCount: number, errorCount: number, fileName: string | null} | null>(null);
     const {toastSuccess, toastError} = useToast();
@@ -76,6 +77,10 @@ const ExcelUploadModal:FC<ExcelUploadModalProps> = ({status, toggleModal, title,
         }
     }
 
+    const downloadSampleExcel = async () => {
+        await exportSampleExcel(`${api_routes.upload.sample_excel}/${sampleExcel}`, sampleExcel);
+    }
+
     return (
         <Modal opened={status} onClose={()=>{form.reset(); setResult(null); toggleModal();}} centered size="sm" withCloseButton={true}  title={'Import '+ title} overlayProps={{
             backgroundOpacity: 0.55,
@@ -87,7 +92,7 @@ const ExcelUploadModal:FC<ExcelUploadModalProps> = ({status, toggleModal, title,
             </Alert>}
             <form onSubmit={form.onSubmit(onSubmitHandler)}>
                 <FileInput
-                    label={<Text size="sm">Select Excel File (<Anchor href={sampleUrl} download={true}>Download Sample Excel</Anchor>)</Text>}
+                    label={<Text size="sm">Select Excel File (<Button type="button" variant="transparent" size="sm" px={0} loading={sampleExcelLoading} onClick={downloadSampleExcel}>Download Sample Excel</Button>)</Text>}
                     placeholder="Excel file"
                     clearable
                     accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"

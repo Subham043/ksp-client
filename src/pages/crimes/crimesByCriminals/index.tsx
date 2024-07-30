@@ -47,7 +47,7 @@ const CrimesByCriminalsListPage:FC = () => {
             </Paper>
             <CrimesByCriminalsModal {...modal} mainCrimeId={Number(param.crimeId)} toggleModal={toggleModal} />
             <CrimesByCriminalsDrawer {...drawerStatus} toggleDrawer={toggleDrawer} />
-            <ExcelUploadModal status={excelModal} toggleModal={toggleExcelModal} title="Criminals" uploadUrl={`${api_routes.crimesByCriminals}/import/${param.crimeId}`} sampleUrl="/Sample_Crimes_By_Criminals.xlsx" />
+            <ExcelUploadModal status={excelModal} toggleModal={toggleExcelModal} title="Criminals" uploadUrl={`${api_routes.crimesByCriminals}/import/${param.crimeId}`} sampleExcel="Sample_Crimes_By_Criminals.xlsx" />
         </div>
     )
 }

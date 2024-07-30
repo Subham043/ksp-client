@@ -47,7 +47,7 @@ const HearingsListPage:FC = () => {
             </Paper>
             <HearingsModal {...modal} mainCourtId={Number(param.courtDetailId)} toggleModal={toggleModal} />
             <HearingsDrawer {...drawerStatus} toggleDrawer={toggleDrawer} />
-            <ExcelUploadModal status={excelModal} toggleModal={toggleExcelModal} title="Hearings" uploadUrl={`${api_routes.hearings}/import/${param.courtDetailId}`} sampleUrl="/Sample_Hearings.xlsx" />
+            <ExcelUploadModal status={excelModal} toggleModal={toggleExcelModal} title="Hearings" uploadUrl={`${api_routes.hearings}/import/${param.courtDetailId}`} sampleExcel="Sample_Hearings.xlsx" />
         </div>
     )
 }
