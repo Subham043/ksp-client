@@ -295,6 +295,12 @@ export type UserQueryType = {
   createdAt: Date;
 };
 
+export type InstallationQueryType = {
+  id: number;
+  IPv4: string;
+  createdAt: Date;
+};
+
 export type DashboardQueryType = {
   crimes: number;
   criminals: number;

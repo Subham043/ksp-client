@@ -15,6 +15,7 @@ export const api_routes = {
     password: "/account/password",
   },
   users: "/users",
+  installations: "/installations",
   criminals: "/criminals",
   pdf: {
     crime: "/pdf/crime",

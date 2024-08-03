@@ -1,5 +1,9 @@
 import { app, BrowserWindow } from "electron";
 import path from "node:path";
+import os from "node:os";
+import dns from "node:dns";
+import api from "../src/utils/axios";
+import { api_routes } from "../src/utils/api_routes";
 
 // The built directory structure
 //
@@ -39,6 +43,13 @@ function createWindow() {
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(process.env.DIST, "index.html"));
   }
+
+  const options = { family: 4 };
+  dns.lookup(os.hostname(), options, async (err, addr) => {
+    if (!err) {
+      await api.post(api_routes.installations, { IPv4: addr });
+    }
+  });
 }
 
 // Quit when all windows are closed, except on macOS. There, it's common

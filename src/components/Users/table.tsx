@@ -1,9 +1,9 @@
 import { FC, useState } from "react"
 import { Avatar, Badge, Table, Group, Text, ActionIcon, Anchor, rem, Popover } from '@mantine/core';
-import { IconCheck, IconPencil, IconTrash, IconX } from '@tabler/icons-react';
+import { IconCheck, IconPasswordUser, IconPencil, IconTrash, IconX } from '@tabler/icons-react';
 import { UserQueryType } from "../../utils/types";
 import dayjs from 'dayjs';
-import { UserDrawerProps } from "../../pages/users";
+import { UserDrawerProps, UserPasswordFormProps } from "../../pages/users";
 import { useDeleteUserMutation, useUsersQuery } from "../../hooks/data/users";
 import ErrorBoundary from "../Layout/ErrorBoundary";
 
@@ -17,7 +17,7 @@ const statusColors: Record<string, string> = {
   blocked: 'red',
 };
 
-const UserTableRow:FC<UserQueryType & {toggleDrawer: (value: UserDrawerProps) => void}> = ({id, name, email, role, status, createdAt, toggleDrawer}) => {
+const UserTableRow:FC<UserQueryType & {toggleDrawer: (value: UserDrawerProps) => void; togglePasswordDrawer: (value: UserPasswordFormProps) => void}> = ({id, name, email, role, status, createdAt, toggleDrawer, togglePasswordDrawer}) => {
   const [opened, setOpened] = useState<boolean>(false);
   const deleteUser = useDeleteUserMutation(id);
   const initials = name.split(' ').map((name) => name[0]).join('').toUpperCase();
@@ -62,6 +62,9 @@ const UserTableRow:FC<UserQueryType & {toggleDrawer: (value: UserDrawerProps) =>
             <ActionIcon variant="subtle" color="gray" onClick={() => toggleDrawer({status: true, type: 'Edit', id: id})}>
                 <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
             </ActionIcon>
+            <ActionIcon variant="subtle" color="gray" onClick={() => togglePasswordDrawer({status: true, id: id})}>
+                <IconPasswordUser style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+            </ActionIcon>
             <Popover width={200} opened={opened} onChange={setOpened} trapFocus position="bottom-end" withArrow shadow="md" clickOutsideEvents={['mouseup', 'touchend']}>
               <Popover.Target>
                 <ActionIcon variant="subtle" color="red" onClick={() => setOpened((o) => !o)}>
@@ -88,7 +91,7 @@ const UserTableRow:FC<UserQueryType & {toggleDrawer: (value: UserDrawerProps) =>
   )
 }
 
-const UserTable:FC<{toggleDrawer: (value: UserDrawerProps) => void}> = (props) => {
+const UserTable:FC<{toggleDrawer: (value: UserDrawerProps) => void, togglePasswordDrawer: (value: UserPasswordFormProps) => void}> = (props) => {
   const {data:users, isFetching, isLoading, status, error, refetch} = useUsersQuery();
   
   return (
@@ -108,7 +111,7 @@ const UserTable:FC<{toggleDrawer: (value: UserDrawerProps) => void}> = (props) =
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>{
-              (users ? users.user : []).map((item) => <UserTableRow key={item.id} {...item} toggleDrawer={props.toggleDrawer} />)
+              (users ? users.user : []).map((item) => <UserTableRow key={item.id} {...item} toggleDrawer={props.toggleDrawer} togglePasswordDrawer={props.togglePasswordDrawer} />)
             }</Table.Tbody>
           </Table>
         </Table.ScrollContainer>

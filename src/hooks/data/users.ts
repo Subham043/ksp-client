@@ -146,6 +146,7 @@ export const useUpdateUserMutation = (id: number) => {
       email: string;
       name: string;
       role: "admin" | "user";
+      status: "active" | "blocked";
       password: string;
       confirm_password: string;
     }) => {
@@ -181,6 +182,7 @@ export const useAddUserMutation = () => {
       email: string;
       name: string;
       role: "admin" | "user";
+      status: "active" | "blocked";
       password: string;
       confirm_password: string;
     }) => {

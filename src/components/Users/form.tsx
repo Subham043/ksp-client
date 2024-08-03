@@ -30,10 +30,12 @@ const UserForm:FC<UserFormProps & {toggleDrawer: (value: UserDrawerProps) => voi
                 email: data.email,
                 name: data.name,
                 role: data.role,
+                status: data.status,
             });
         }else{
             form.setValues({
                 role: "user",
+                status: "active",
             });
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,12 +72,19 @@ const UserForm:FC<UserFormProps & {toggleDrawer: (value: UserDrawerProps) => voi
                 <TextInput withAsterisk data-autofocus label="Name" placeholder="mantine dev" {...form.getInputProps('name')} />
                 <TextInput withAsterisk label="Email" placeholder="you@mantine.dev" {...form.getInputProps('email')} mt="md" />
                 <Select
-                    label="Sex"
+                    label="Role"
                     mt="md"
                     data={['user', 'admin']}
                     value={form.values.role ? form.values.role : "user"}
                     onChange={(value) => form.setFieldValue("role", value ? value as 'user' | 'admin' : "user")}
                 />
+                {props.type === "Edit" && <Select
+                    label="Status"
+                    mt="md"
+                    data={['active', 'blocked']}
+                    value={form.values.status ? form.values.status : "active"}
+                    onChange={(value) => form.setFieldValue("status", value ? value as 'active' | 'blocked' : "active")}
+                />}
                 {
                     props.type === "Create" && <>
                         <PasswordInput label="Password" placeholder="Password" withAsterisk mt="md" {...form.getInputProps('password')} />

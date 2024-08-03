@@ -25,6 +25,7 @@ const CourtsPage = lazy(()=>import("./pages/courts/list"));
 const CourtsDetailPage = lazy(()=>import("./pages/courts/detail"));
 const JailsPage = lazy(()=>import("./pages/jails/list"));
 const JailsDetailPage = lazy(()=>import("./pages/jails/detail"));
+const InstallationPage = lazy(()=>import("./pages/installations"));
 
 // Create a client
 const queryClient = new QueryClient(QueryClientOptions);
@@ -43,6 +44,7 @@ function App() {
                     <Route element={<DashboardLayout />}>
                       <Route path={page_routes.dashboard} element={<DashboardPage />} />
                       <Route path={page_routes.users} element={<UsersPage />} />
+                      <Route path={page_routes.installations} element={<InstallationPage />} />
                       <Route path={page_routes.criminals.list} element={<CriminalsPage />} />
                       <Route path={page_routes.criminals.detail} element={<CriminalsDetailPage />} />
                       <Route path={page_routes.crimes.list} element={<CrimesPage />} />

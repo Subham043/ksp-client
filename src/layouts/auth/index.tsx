@@ -7,6 +7,7 @@ import {
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 import logo from '../../assets/logo.png'
+import powered from '../../assets/powered.png'
 
 const AuthLayout:FC = () => {
 
@@ -24,6 +25,13 @@ const AuthLayout:FC = () => {
                                 <img src={logo} alt="" style={{ width: rem(150) }} />
                             </Center>
                             <Outlet /> 
+                            <Center mt={40}>
+                                <div style={{textAlign: 'center'}}>
+                                    <img src={powered} alt="" style={{ width: rem(100), margin: 'auto' }} />
+                                    <h5 style={{ margin: '0px' }}>Powered by GANAKA LABS</h5>
+                                    <p style={{ margin: '0px', fontSize: '13px', color: 'rgb(215 0 105)' }}>v1.0.1</p>
+                                </div>
+                            </Center>
                         </Grid.Col>
                     </Grid>
                 </Center>

@@ -2,14 +2,13 @@ import {
     TextInput,
     PasswordInput,
     Checkbox,
-    Anchor,
     Paper,
     Title,
     Group,
     Button,
 } from '@mantine/core';
 import { FC, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { page_routes } from '../../../utils/page_routes';
 import { yupResolver } from 'mantine-form-yup-resolver';
 import * as yup from 'yup';
@@ -34,8 +33,7 @@ const LoginPage:FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const {setUser} = useUser();
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location?.state?.from?.pathname || page_routes.dashboard;
+    const from = page_routes.dashboard;
     const {toastError, toastSuccess} = useToast();
     const form = useForm({
         initialValues: {
@@ -82,11 +80,11 @@ const LoginPage:FC = () => {
                     <PasswordInput withAsterisk label="Password" placeholder="Your password" mt="md" {...form.getInputProps('password')} />
                     <Group justify="space-between" mt="lg">
                         <Checkbox label="Remember me" />
-                        <Link to={page_routes.auth.forgot_password}>
+                        {/* <Link to={page_routes.auth.forgot_password}>
                             <Anchor component="button" type='button' size="sm">
                                 Forgot password?
                             </Anchor>
-                        </Link>
+                        </Link> */}
                     </Group>
                     <Button type='submit' variant="filled" color='main' loading={loading} disabled={loading} data-disabled={loading} fullWidth mt="xl">
                         Sign in

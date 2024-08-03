@@ -8,12 +8,14 @@ import {
   IconFilePercent,
   IconBuildingBank,
   IconPrison,
+  IconCloudDownload,
 } from '@tabler/icons-react';
 import classes from './sidebar.module.css';
 import { FC, useState } from 'react';
 import { page_routes } from '../../utils/page_routes';
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/logo.png'
+import powered from '../../assets/powered.png'
 import { useUser } from '../../hooks/useUser';
 
 interface SidebarProps {
@@ -24,6 +26,7 @@ interface SidebarProps {
 const mockdata = [
   { label: 'Dashboard', icon: IconGauge, link: page_routes.dashboard, role: ["user", "admin"] },
   { label: 'Users', icon: IconUserCircle, link: page_routes.users, role: ["admin"] },
+  { label: 'Downloads', icon: IconCloudDownload, link: page_routes.installations, role: ["admin"] },
   { label: 'Criminals', icon: IconUsersMinus, link: page_routes.criminals.list, role: ["user", "admin"] },
   { label: 'Crimes', icon: IconFilePercent, link: page_routes.crimes.list, role: ["user", "admin"] },
   { label: 'Court Details', icon: IconBuildingBank, link: page_routes.court_details.list, role: ["user", "admin"] },
@@ -119,6 +122,14 @@ const Sidebar:FC<SidebarProps> = ({ opened, toggle }) => {
       <ScrollArea className={classes.links}>
         <div className={classes.linksInner}>{links}</div>
       </ScrollArea>
+
+      <div className={classes.footer}>
+        <div style={{textAlign: 'center'}}>
+            <img src={powered} alt="" style={{ width: rem(100), margin: 'auto' }} />
+            <h5 style={{ margin: '0px' }}>Powered by GANAKA LABS</h5>
+            <p style={{ margin: '0px', fontSize: '13px', color: 'rgb(215 0 105)' }}>v1.0.1</p>
+        </div>
+      </div>
     </nav>
   );
 }

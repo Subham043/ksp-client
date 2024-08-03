@@ -54,7 +54,6 @@ const UserProvider: React.FC<ChildrenType> = ({ children }) => {
 
   const userCookieData = useMemo(()=>{
     const userData = window.localStorage.getItem(UserCookieName);
-    console.log(userData);
     if(userData && userData.length>0) {
       try {
         const encryptedString = atob(userData);
